@@ -8,11 +8,39 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Lotto Number Generator</h1>
-        <button id="generate-btn">Generate Numbers</button>
-        <div id="result" class="result-container">
-            <p>Your lucky numbers will appear here!</p>
+    <button id="theme-toggle" aria-label="Toggle dark/light mode">🌙</button>
+    <div class="page-wrapper">
+        <div class="container">
+            <h1>Lotto Number Generator</h1>
+            <button id="generate-btn">Generate Numbers</button>
+            <div id="result" class="result-container">
+                <p>Your lucky numbers will appear here!</p>
+            </div>
+        </div>
+
+        <div class="container contact-container">
+            <h2>제휴 문의</h2>
+            <p class="contact-desc">비즈니스 제휴 및 파트너십 관련 문의를 남겨주세요.</p>
+            <form id="contact-form" action="https://formspree.io/f/mreavwkj" method="POST">
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name" placeholder="홍길동" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">이메일</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">회사 / 브랜드명</label>
+                    <input type="text" id="company" name="company" placeholder="(주)회사명">
+                </div>
+                <div class="form-group">
+                    <label for="message">문의 내용</label>
+                    <textarea id="message" name="message" rows="4" placeholder="제휴 목적 및 문의 내용을 입력해 주세요." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">문의 보내기</button>
+                <p id="form-status"></p>
+            </form>
         </div>
     </div>
     <script src="main.js"></script>
