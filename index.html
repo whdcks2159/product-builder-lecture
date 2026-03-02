@@ -12,8 +12,13 @@
     <div class="util-bar">
         <div class="util-inner">
             <ul class="util-links">
-                <li><a href="#">로그인</a></li>
-                <li><a href="#">회원가입</a></li>
+                <li id="util-login"><a href="login.html">로그인</a></li>
+                <li id="util-signup"><a href="signup.html">회원가입</a></li>
+                <li id="util-user-info" style="display:none">
+                    <span id="util-username"></span>
+                    <span class="util-sep">|</span>
+                    <button id="util-logout-btn" class="util-logout-btn">로그아웃</button>
+                </li>
                 <li><a href="#">고객센터</a></li>
                 <li><a href="#">사이트맵</a></li>
             </ul>
@@ -163,5 +168,10 @@
     </footer>
 
     <script src="main.js"></script>
+
+    <!-- ── Firebase SDKs ── -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 — LottoGen</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+
+    <!-- ── 상단 유틸 바 ── -->
+    <div class="util-bar">
+        <div class="util-inner">
+            <ul class="util-links">
+                <li id="util-login"><a href="login.html">로그인</a></li>
+                <li id="util-signup"><a href="signup.html">회원가입</a></li>
+                <li id="util-user-info" style="display:none">
+                    <span id="util-username"></span>
+                    <span class="util-sep">|</span>
+                    <button id="util-logout-btn" class="util-logout-btn">로그아웃</button>
+                </li>
+                <li><a href="#">고객센터</a></li>
+                <li><a href="#">사이트맵</a></li>
+            </ul>
+            <button id="theme-toggle" aria-label="다크/라이트 모드 전환">🌙</button>
+        </div>
+    </div>
+
+    <!-- ── 헤더 ── -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">LOTTO<span>GEN</span></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#lotto-section">번호생성</a></li>
+                    <li><a href="index.html#disqus-section">커뮤니티</a></li>
+                    <li><a href="index.html#contact-section">제휴문의</a></li>
+                    <li><a href="#">당첨결과</a></li>
+                    <li><a href="#">이용안내</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ── 회원가입 카드 ── -->
+    <main class="auth-main">
+        <div class="auth-card">
+            <h1 class="auth-title">회원가입</h1>
+            <p class="auth-sub">LottoGen 계정을 만들어보세요</p>
+
+            <form id="signup-form" novalidate>
+                <div class="form-group">
+                    <label for="signup-name">이름 <span class="required">*</span></label>
+                    <input type="text" id="signup-name" name="name"
+                           placeholder="홍길동" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">이메일 <span class="required">*</span></label>
+                    <input type="email" id="signup-email" name="email"
+                           placeholder="example@email.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">비밀번호 <span class="required">*</span></label>
+                    <input type="password" id="signup-password" name="password"
+                           placeholder="6자 이상 입력" required autocomplete="new-password"
+                           minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password-confirm">비밀번호 확인 <span class="required">*</span></label>
+                    <input type="password" id="signup-password-confirm" name="password-confirm"
+                           placeholder="비밀번호 재입력" required autocomplete="new-password">
+                </div>
+
+                <p id="signup-error" class="auth-error" aria-live="polite"></p>
+
+                <button type="submit" class="submit-btn auth-submit-btn" id="signup-btn">
+                    회원가입
+                </button>
+            </form>
+
+            <p class="auth-footer-link">
+                이미 계정이 있으신가요?
+                <a href="login.html">로그인</a>
+            </p>
+        </div>
+    </main>
+
+    <!-- ── 푸터 ── -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <span class="footer-logo">LOTTOGEN</span>
+                <ul class="footer-links">
+                    <li><a href="#">이용약관</a></li>
+                    <li><a href="#">개인정보처리방침</a></li>
+                    <li><a href="#">고객센터</a></li>
+                    <li><a href="index.html#contact-section">제휴문의</a></li>
+                </ul>
+            </div>
+            <p class="footer-copy">© 2026 LottoGen. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ── Firebase SDKs ── -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="auth.js"></script>
+
+    <script>
+        // 이미 로그인된 경우 index로 이동
+        auth.onAuthStateChanged(function(user) {
+            if (user) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name     = document.getElementById('signup-name').value.trim();
+            const email    = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirm  = document.getElementById('signup-password-confirm').value;
+            const errorEl  = document.getElementById('signup-error');
+            const btn      = document.getElementById('signup-btn');
+
+            errorEl.textContent = '';
+
+            // 클라이언트 검증
+            if (!name) {
+                errorEl.textContent = '이름을 입력해주세요.';
+                return;
+            }
+            if (password.length < 6) {
+                errorEl.textContent = '비밀번호는 6자 이상이어야 합니다.';
+                return;
+            }
+            if (password !== confirm) {
+                errorEl.textContent = '비밀번호가 일치하지 않습니다.';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '가입 중...';
+
+            handleSignup(name, email, password)
+                .then(function() {
+                    window.location.href = 'index.html';
+                })
+                .catch(function(err) {
+                    errorEl.textContent = getAuthErrorMessage(err.code);
+                    btn.disabled = false;
+                    btn.textContent = '회원가입';
+                });
+        });
+
+        // 다크모드 토글
+        (function() {
+            const stored = localStorage.getItem('theme');
+            if (stored === 'dark') document.body.classList.add('dark');
+            const btn = document.getElementById('theme-toggle');
+            if (btn) {
+                btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+                btn.addEventListener('click', function() {
+                    document.body.classList.toggle('dark');
+                    const isDark = document.body.classList.contains('dark');
+                    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                    btn.textContent = isDark ? '☀️' : '🌙';
+                });
+            }
+        })();
+
+        function getAuthErrorMessage(code) {
+            const messages = {
+                'auth/email-already-in-use': '이미 사용 중인 이메일입니다.',
+                'auth/invalid-email':        '유효하지 않은 이메일 형식입니다.',
+                'auth/weak-password':        '비밀번호가 너무 약합니다. 6자 이상 입력해주세요.',
+                'auth/operation-not-allowed':'이메일/비밀번호 로그인이 비활성화되어 있습니다.',
+            };
+            return messages[code] || '회원가입 중 오류가 발생했습니다. 다시 시도해주세요.';
+        }
+    </script>
+</body>
+</html>
