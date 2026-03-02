@@ -1,25 +1,99 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Number Generator</title>
+    <title>로또 번호 생성기</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="theme-toggle" aria-label="Toggle dark/light mode">🌙</button>
-    <div class="page-wrapper">
-        <div class="container">
-            <h1>Lotto Number Generator</h1>
-            <button id="generate-btn">Generate Numbers</button>
-            <div id="result" class="result-container">
-                <p>Your lucky numbers will appear here!</p>
-            </div>
-        </div>
 
-        <div class="container disqus-container">
-            <h2>댓글</h2>
+    <!-- ── 상단 유틸 바 ── -->
+    <div class="util-bar">
+        <div class="util-inner">
+            <ul class="util-links">
+                <li><a href="#">로그인</a></li>
+                <li><a href="#">회원가입</a></li>
+                <li><a href="#">고객센터</a></li>
+                <li><a href="#">사이트맵</a></li>
+            </ul>
+            <button id="theme-toggle" aria-label="다크/라이트 모드 전환">🌙</button>
+        </div>
+    </div>
+
+    <!-- ── 헤더 ── -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="#" class="logo">LOTTO<span>GEN</span></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#lotto-section">번호생성</a></li>
+                    <li><a href="#disqus-section">커뮤니티</a></li>
+                    <li><a href="#contact-section">제휴문의</a></li>
+                    <li><a href="#">당첨결과</a></li>
+                    <li><a href="#">이용안내</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="메뉴 열기">☰</button>
+        </div>
+    </header>
+
+    <!-- ── 모바일 드로어 ── -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <button class="drawer-close" id="drawer-close">✕</button>
+        <ul>
+            <li><a href="#lotto-section">번호생성</a></li>
+            <li><a href="#disqus-section">커뮤니티</a></li>
+            <li><a href="#contact-section">제휴문의</a></li>
+            <li><a href="#">당첨결과</a></li>
+            <li><a href="#">이용안내</a></li>
+        </ul>
+    </div>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- ── 히어로 배너 ── -->
+    <section class="hero">
+        <div class="hero-inner">
+            <p class="hero-sub">오늘의 행운을 숫자로</p>
+            <h2 class="hero-title">나만의 로또 번호를<br>지금 바로 생성하세요</h2>
+            <a href="#lotto-section" class="hero-btn">번호 생성하기</a>
+        </div>
+    </section>
+
+    <!-- ── 카테고리 탭 ── -->
+    <div class="category-bar">
+        <div class="category-inner">
+            <button class="cat-btn active" data-target="lotto-section">번호생성</button>
+            <button class="cat-btn" data-target="disqus-section">커뮤니티</button>
+            <button class="cat-btn" data-target="contact-section">제휴문의</button>
+        </div>
+    </div>
+
+    <!-- ── 메인 컨텐츠 ── -->
+    <main class="main-content">
+
+        <!-- 로또 번호 생성 -->
+        <section class="content-section" id="lotto-section">
+            <div class="section-header">
+                <h2 class="section-title">번호 생성</h2>
+                <p class="section-desc">1~45 사이의 번호 6개를 무작위로 추첨합니다</p>
+            </div>
+            <div class="lotto-card">
+                <button id="generate-btn">번호 생성</button>
+                <div id="result" class="result-container">
+                    <p class="result-placeholder">버튼을 눌러 행운의 번호를 확인하세요</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- 댓글 -->
+        <section class="content-section" id="disqus-section">
+            <div class="section-header">
+                <h2 class="section-title">커뮤니티</h2>
+                <p class="section-desc">당첨 번호와 경험을 공유해보세요</p>
+            </div>
             <div id="disqus_thread"></div>
             <script>
                 var disqus_config = function () {
@@ -34,33 +108,60 @@
                 })();
             </script>
             <noscript>댓글을 보려면 JavaScript를 활성화해 주세요. <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        </div>
+        </section>
 
-        <div class="container contact-container">
-            <h2>제휴 문의</h2>
-            <p class="contact-desc">비즈니스 제휴 및 파트너십 관련 문의를 남겨주세요.</p>
+        <hr class="section-divider">
+
+        <!-- 제휴 문의 -->
+        <section class="content-section" id="contact-section">
+            <div class="section-header">
+                <h2 class="section-title">제휴 문의</h2>
+                <p class="section-desc">비즈니스 제휴 및 파트너십 관련 문의를 남겨주세요</p>
+            </div>
             <form id="contact-form" action="https://formspree.io/f/mreavwkj" method="POST">
-                <div class="form-group">
-                    <label for="name">이름</label>
-                    <input type="text" id="name" name="name" placeholder="홍길동" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">이메일</label>
-                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">이름 <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" placeholder="홍길동" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">이메일 <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="company">회사 / 브랜드명</label>
                     <input type="text" id="company" name="company" placeholder="(주)회사명">
                 </div>
                 <div class="form-group">
-                    <label for="message">문의 내용</label>
-                    <textarea id="message" name="message" rows="4" placeholder="제휴 목적 및 문의 내용을 입력해 주세요." required></textarea>
+                    <label for="message">문의 내용 <span class="required">*</span></label>
+                    <textarea id="message" name="message" rows="5" placeholder="제휴 목적 및 문의 내용을 입력해 주세요." required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">문의 보내기</button>
-                <p id="form-status"></p>
+                <div class="form-submit-row">
+                    <button type="submit" class="submit-btn">문의 보내기</button>
+                    <p id="form-status"></p>
+                </div>
             </form>
+        </section>
+
+    </main>
+
+    <!-- ── 푸터 ── -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <span class="footer-logo">LOTTOGEN</span>
+                <ul class="footer-links">
+                    <li><a href="#">이용약관</a></li>
+                    <li><a href="#">개인정보처리방침</a></li>
+                    <li><a href="#">고객센터</a></li>
+                    <li><a href="#contact-section">제휴문의</a></li>
+                </ul>
+            </div>
+            <p class="footer-copy">© 2026 LottoGen. All rights reserved.</p>
         </div>
-    </div>
+    </footer>
+
     <script src="main.js"></script>
 </body>
 </html>
