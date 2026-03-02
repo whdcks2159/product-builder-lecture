@@ -159,6 +159,22 @@ h1 {
     box-shadow: 0 2px 5px var(--number-shadow);
 }
 
+/* ── Disqus ── */
+.disqus-container {
+    text-align: left;
+}
+
+.disqus-container h2 {
+    font-size: 1.6rem;
+    color: var(--title-color);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#disqus_thread {
+    min-height: 100px;
+}
+
 /* ── Contact Form ── */
 .contact-container {
     text-align: left;
