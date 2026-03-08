@@ -372,7 +372,7 @@ ul { list-style: none; }
 
 /* ── Main Content ── */
 .main-content {
-    max-width: 860px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 64px 24px 80px;
 }
@@ -404,58 +404,57 @@ ul { list-style: none; }
     margin: 64px 0;
 }
 
-/* ── Lotto Card ── */
-.lotto-card {
-    background-color: var(--gray-50);
+/* ── Charts Grid ── */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.chart-card {
     border: 1px solid var(--section-border);
-    padding: 40px;
-    text-align: center;
+    background-color: var(--body-bg);
+    overflow: hidden;
 }
 
-#generate-btn {
-    background-color: var(--btn-bg);
-    color: var(--btn-text);
-    border: 2px solid var(--btn-bg);
-    padding: 13px 40px;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
+.chart-card--wide {
+    grid-column: 1 / -1;
 }
 
-#generate-btn:hover {
-    background-color: transparent;
-    color: var(--black);
-}
-
-.result-container {
-    margin-top: 32px;
-    min-height: 64px;
+.chart-card-header {
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--section-border);
+    background-color: var(--gray-50);
 }
 
-.result-placeholder {
-    font-size: 13px;
-    color: var(--gray-400);
-    letter-spacing: 0.02em;
-}
-
-.lotto-number {
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 50%;
-    background-color: var(--number-bg);
-    color: var(--btn-text);
-    font-size: 16px;
+.chart-name {
+    font-size: 15px;
     font-weight: 700;
-    text-align: center;
-    display: inline-block;
+    color: var(--black);
+    letter-spacing: -0.01em;
+}
+
+.chart-symbol {
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 0.08em;
+    font-weight: 500;
+}
+
+.tradingview-widget-copyright {
+    padding: 6px 12px;
+    font-size: 11px;
+}
+
+.tradingview-widget-copyright a {
+    color: var(--gray-400);
+}
+
+.tradingview-widget-copyright a:hover {
+    color: var(--black);
 }
 
 /* ── Contact Form ── */
@@ -707,7 +706,13 @@ ul { list-style: none; }
 
     .hero { padding: 56px 20px; }
 
-    .lotto-card { padding: 28px 20px; }
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-card--wide {
+        grid-column: 1;
+    }
 
     .form-row {
         grid-template-columns: 1fr;

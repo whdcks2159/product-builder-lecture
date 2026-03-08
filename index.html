@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로또 번호 생성기</title>
+    <title>StockView - 주식 시장 현황</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,13 +29,13 @@
     <!-- ── 헤더 ── -->
     <header class="site-header">
         <div class="header-inner">
-            <a href="#" class="logo">LOTTO<span>GEN</span></a>
+            <a href="#" class="logo">STOCK<span>VIEW</span></a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="#lotto-section">번호생성</a></li>
+                    <li><a href="#charts-section">시장현황</a></li>
                     <li><a href="#disqus-section">커뮤니티</a></li>
                     <li><a href="#contact-section">제휴문의</a></li>
-                    <li><a href="#">당첨결과</a></li>
+                    <li><a href="#">종목검색</a></li>
                     <li><a href="#">이용안내</a></li>
                 </ul>
             </nav>
@@ -47,10 +47,10 @@
     <div class="mobile-drawer" id="mobile-drawer">
         <button class="drawer-close" id="drawer-close">✕</button>
         <ul>
-            <li><a href="#lotto-section">번호생성</a></li>
+            <li><a href="#charts-section">시장현황</a></li>
             <li><a href="#disqus-section">커뮤니티</a></li>
             <li><a href="#contact-section">제휴문의</a></li>
-            <li><a href="#">당첨결과</a></li>
+            <li><a href="#">종목검색</a></li>
             <li><a href="#">이용안내</a></li>
         </ul>
     </div>
@@ -59,16 +59,16 @@
     <!-- ── 히어로 배너 ── -->
     <section class="hero">
         <div class="hero-inner">
-            <p class="hero-sub">오늘의 행운을 숫자로</p>
-            <h2 class="hero-title">나만의 로또 번호를<br>지금 바로 생성하세요</h2>
-            <a href="#lotto-section" class="hero-btn">번호 생성하기</a>
+            <p class="hero-sub">실시간 글로벌 주식 시장</p>
+            <h2 class="hero-title">코스피 · 코스닥 · 나스닥<br>한눈에 확인하세요</h2>
+            <a href="#charts-section" class="hero-btn">시장 현황 보기</a>
         </div>
     </section>
 
     <!-- ── 카테고리 탭 ── -->
     <div class="category-bar">
         <div class="category-inner">
-            <button class="cat-btn active" data-target="lotto-section">번호생성</button>
+            <button class="cat-btn active" data-target="charts-section">시장현황</button>
             <button class="cat-btn" data-target="disqus-section">커뮤니티</button>
             <button class="cat-btn" data-target="contact-section">제휴문의</button>
         </div>
@@ -77,33 +77,105 @@
     <!-- ── 메인 컨텐츠 ── -->
     <main class="main-content">
 
-        <!-- 로또 번호 생성 -->
-        <section class="content-section" id="lotto-section">
+        <!-- 주식 차트 -->
+        <section class="content-section" id="charts-section">
             <div class="section-header">
-                <h2 class="section-title">번호 생성</h2>
-                <p class="section-desc">1~45 사이의 번호 6개를 무작위로 추첨합니다</p>
+                <h2 class="section-title">시장 현황</h2>
+                <p class="section-desc">코스피 · 코스닥 · 나스닥 실시간 차트</p>
             </div>
-            <div class="lotto-card">
-                <button id="generate-btn">번호 생성</button>
-                <div id="result" class="result-container">
-                    <p class="result-placeholder">버튼을 눌러 행운의 번호를 확인하세요</p>
+            <div class="charts-grid">
+
+                <!-- KOSPI -->
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <span class="chart-name">코스피</span>
+                        <span class="chart-symbol">KOSPI</span>
+                    </div>
+                    <div class="tradingview-widget-container" style="height:380px;width:100%">
+                        <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                        {
+                          "autosize": true,
+                          "symbol": "KRX:KOSPI",
+                          "interval": "D",
+                          "timezone": "Asia/Seoul",
+                          "theme": "light",
+                          "style": "3",
+                          "locale": "ko",
+                          "allow_symbol_change": false,
+                          "support_host": "https://www.tradingview.com"
+                        }
+                        </script>
+                    </div>
                 </div>
+
+                <!-- KOSDAQ -->
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <span class="chart-name">코스닥</span>
+                        <span class="chart-symbol">KOSDAQ</span>
+                    </div>
+                    <div class="tradingview-widget-container" style="height:380px;width:100%">
+                        <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                        {
+                          "autosize": true,
+                          "symbol": "KRX:KOSDAQ",
+                          "interval": "D",
+                          "timezone": "Asia/Seoul",
+                          "theme": "light",
+                          "style": "3",
+                          "locale": "ko",
+                          "allow_symbol_change": false,
+                          "support_host": "https://www.tradingview.com"
+                        }
+                        </script>
+                    </div>
+                </div>
+
+                <!-- NASDAQ -->
+                <div class="chart-card chart-card--wide">
+                    <div class="chart-card-header">
+                        <span class="chart-name">나스닥</span>
+                        <span class="chart-symbol">NASDAQ</span>
+                    </div>
+                    <div class="tradingview-widget-container" style="height:420px;width:100%">
+                        <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                        {
+                          "autosize": true,
+                          "symbol": "NASDAQ:IXIC",
+                          "interval": "D",
+                          "timezone": "America/New_York",
+                          "theme": "light",
+                          "style": "3",
+                          "locale": "ko",
+                          "allow_symbol_change": false,
+                          "support_host": "https://www.tradingview.com"
+                        }
+                        </script>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <hr class="section-divider">
 
-        <!-- 댓글 -->
+        <!-- 커뮤니티 -->
         <section class="content-section" id="disqus-section">
             <div class="section-header">
                 <h2 class="section-title">커뮤니티</h2>
-                <p class="section-desc">당첨 번호와 경험을 공유해보세요</p>
+                <p class="section-desc">주식 투자 정보와 경험을 공유해보세요</p>
             </div>
             <div id="disqus_thread"></div>
             <script>
                 var disqus_config = function () {
                     this.page.url = 'https://whdcks2159.github.io/product-builder-lecture/';
-                    this.page.identifier = 'lotto-main';
+                    this.page.identifier = 'stock-main';
                 };
                 (function() {
                     var d = document, s = d.createElement('script');
@@ -155,7 +227,7 @@
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-top">
-                <span class="footer-logo">LOTTOGEN</span>
+                <span class="footer-logo">STOCKVIEW</span>
                 <ul class="footer-links">
                     <li><a href="#">이용약관</a></li>
                     <li><a href="#">개인정보처리방침</a></li>
@@ -163,7 +235,7 @@
                     <li><a href="#contact-section">제휴문의</a></li>
                 </ul>
             </div>
-            <p class="footer-copy">© 2026 LottoGen. All rights reserved.</p>
+            <p class="footer-copy">© 2026 StockView. All rights reserved.</p>
         </div>
     </footer>
 

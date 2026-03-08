@@ -1,7 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    const generateBtn = document.getElementById('generate-btn');
-    const resultContainer = document.getElementById('result');
     const themeToggle = document.getElementById('theme-toggle');
 
     // ── Dark / Light Mode ──
@@ -49,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Update active category on scroll
-    const sections = ['lotto-section', 'disqus-section', 'contact-section'];
+    const sections = ['charts-section', 'disqus-section', 'contact-section'];
     window.addEventListener('scroll', () => {
         let current = sections[0];
         sections.forEach(id => {
@@ -91,28 +89,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ── Lotto Generator ──
-    generateBtn.addEventListener('click', () => {
-        const lottoNumbers = generateLottoNumbers();
-        displayNumbers(lottoNumbers);
-    });
-
-    function generateLottoNumbers() {
-        const numbers = new Set();
-        while (numbers.size < 6) {
-            const randomNumber = Math.floor(Math.random() * 45) + 1;
-            numbers.add(randomNumber);
-        }
-        return Array.from(numbers).sort((a, b) => a - b);
-    }
-
-    function displayNumbers(numbers) {
-        resultContainer.innerHTML = '';
-        numbers.forEach(number => {
-            const numberElement = document.createElement('div');
-            numberElement.className = 'lotto-number';
-            numberElement.textContent = number;
-            resultContainer.appendChild(numberElement);
-        });
-    }
 });
