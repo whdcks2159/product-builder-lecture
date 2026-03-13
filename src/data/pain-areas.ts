@@ -92,6 +92,24 @@ export const painAreas: PainArea[] = [
   },
 
   {
+    id: 'hamstring',
+    slug: 'hamstring-pain',
+    name: '햄스트링 통증',
+    icon: '🦵',
+    description: '허벅지 뒤쪽 햄스트링 근육의 긴장과 통증을 완화하는 스트레칭입니다.',
+    seoTitle: '햄스트링 통증 완화 스트레칭 | 허벅지 뒤쪽 근육 이완',
+    seoDescription: '햄스트링 통증을 효과적으로 완화하는 5가지 스트레칭. 허벅지 뒤쪽 근육 이완으로 유연성을 높이세요.',
+    keywords: ['햄스트링', '허벅지 통증', '햄스트링 스트레칭', '허벅지 뒤쪽 통증'],
+    stretches: [
+      { id: 'standing-hamstring', name: '서서 햄스트링 스트레칭', difficulty: '쉬움', holdTime: '30초', muscles: ['햄스트링', '종아리'], description: '한 발을 앞으로 내밀고 발끝을 세워 허벅지 뒤쪽을 늘려줍니다.', steps: ['한 발을 30cm 앞으로 내밀기', '발끝을 천장 방향으로 세우기', '허리를 곧게 펴고 앞으로 천천히 숙이기', '햄스트링의 당김을 느끼며 30초 유지', '반대쪽도 동일하게 실시'], icon: '🦵' },
+      { id: 'seated-hamstring', name: '앉아서 햄스트링 스트레칭', difficulty: '쉬움', holdTime: '30초', muscles: ['햄스트링', '허리'], description: '바닥에 앉아 다리를 뻗고 발끝 방향으로 상체를 숙여줍니다.', steps: ['바닥에 앉아 두 다리를 앞으로 뻗기', '발끝을 세우기', '허리를 곧게 편 상태로 상체를 천천히 앞으로 숙이기', '손이 발끝에 닿도록 노력하기', '30초 유지 후 천천히 이완'], icon: '🧘' },
+      { id: 'lying-hamstring', name: '누워서 햄스트링 스트레칭', difficulty: '쉬움', holdTime: '30초', muscles: ['햄스트링'], description: '등을 대고 누워 한쪽 다리를 들어 올려 햄스트링을 이완합니다.', steps: ['등을 대고 편안하게 눕기', '한쪽 무릎을 가슴 쪽으로 당기기', '다리를 천천히 위로 뻗기', '양손으로 허벅지 뒤를 잡고 지지', '30초 유지 후 반대쪽 실시'], icon: '🛌' },
+      { id: 'downward-dog-hamstring', name: '다운독 햄스트링 스트레칭', difficulty: '보통', holdTime: '30초', muscles: ['햄스트링', '종아리', '등'], description: '엎드린 자세에서 엉덩이를 들어올려 역V자 형태로 햄스트링을 늘립니다.', steps: ['손과 무릎을 바닥에 짚기', '엉덩이를 천장 방향으로 들어올리기', '무릎을 최대한 펴고 발뒤꿈치를 바닥으로 누르기', '머리는 두 팔 사이로 넣기', '30초 유지'], icon: '🐕' },
+      { id: 'lunge-hamstring', name: '런지 햄스트링 스트레칭', difficulty: '보통', holdTime: '20초', muscles: ['햄스트링', '대퇴사두근', '고관절'], description: '런지 자세에서 뒷다리 햄스트링을 효과적으로 이완시킵니다.', steps: ['런지 자세로 한 발을 앞으로 내딛기', '뒷 무릎을 바닥에 살짝 닿게 하기', '앞 다리 무릎을 펴면서 체중을 뒤로 이동', '뒷다리 햄스트링의 당김을 느끼기', '20초 유지 후 반대쪽 실시'], icon: '🏃' },
+    ],
+  },
+
+  {
     id: 'hip',
     slug: 'hip-pain',
     name: '고관절 통증',

@@ -1016,6 +1016,36 @@ export const exercises: Exercise[] = [
       { id: 'full-body-floor-home', name: '전신 바닥 이완', description: '홈트 마무리로 전신을 완전히 이완하여 근육 회복을 돕습니다.', muscles: ['전신', '척추'], holdTime: '3분', steps: ['매트에 등을 대고 편안하게 눕습니다.', '팔은 몸에서 약간 떨어뜨려 자연스럽게 놓습니다.', '눈을 감고 발부터 시작해 머리까지 각 부위를 의식적으로 이완합니다.', '자연스러운 호흡을 유지하며 3분간 완전히 쉽니다.'], icon: '😴' },
     ],
   },
+  {
+    id: 'tennis',
+    slug: 'tennis-stretching',
+    name: '테니스',
+    englishName: 'Tennis',
+    icon: '🎾',
+    gradient: 'linear-gradient(135deg,#facc15,#84cc16)',
+    lightBg: '#fefce8',
+    accentColor: '#84cc16',
+    shortDesc: '테니스 부상 예방과 경기력 향상을 위한 스트레칭',
+    intro: '테니스는 어깨, 팔꿈치, 손목, 무릎 등 전신을 사용하는 운동입니다. 올바른 스트레칭으로 테니스 엘보우와 같은 부상을 예방하고 경기력을 높이세요.',
+    seoTitle: '테니스 스트레칭 | 경기 전후 부상 예방 가이드',
+    seoDescription: '테니스 경기 전 워밍업과 경기 후 쿨다운 스트레칭. 테니스 엘보우 예방과 어깨·손목 유연성 향상에 효과적입니다.',
+    keywords: ['테니스 스트레칭', '테니스 준비운동', '테니스 엘보우 예방', '테니스 쿨다운'],
+    relatedMuscles: ['어깨', '팔꿈치', '손목', '허리', '허벅지', '종아리'],
+    beforeStretches: [
+      { id: 'wrist-tennis-before', name: '손목 회전 스트레칭', difficulty: '쉬움', holdTime: '30초', muscles: ['손목', '전완근'], description: '라켓을 잡기 전 손목 관절을 충분히 풀어줍니다.', steps: ['팔을 앞으로 뻗기', '손목을 시계방향으로 10회 회전', '반시계방향으로 10회 회전', '손가락을 쫙 펴서 스트레칭', '손가락을 꽉 쥐었다 풀기 10회'], icon: '✋' },
+      { id: 'shoulder-tennis-before', name: '어깨 크로스 스트레칭', difficulty: '쉬움', holdTime: '30초', muscles: ['어깨', '삼각근'], description: '서브와 스트로크에 사용되는 어깨 근육을 준비시킵니다.', steps: ['한팔을 반대쪽 어깨 방향으로 뻗기', '반대 팔로 팔꿈치를 몸통 쪽으로 잡아당기기', '어깨 뒤쪽의 당김을 느끼며 30초 유지', '반대쪽도 동일하게 실시'], icon: '💪' },
+      { id: 'elbow-tennis-before', name: '팔꿈치 굴곡근 스트레칭', difficulty: '쉬움', holdTime: '30초', muscles: ['전완근', '팔꿈치'], description: '테니스 엘보우 예방을 위한 필수 스트레칭입니다.', steps: ['팔을 앞으로 완전히 펴기', '손바닥이 위를 향하도록 뒤집기', '반대 손으로 손가락을 아래로 당기기', '전완근 아래쪽의 당김을 느끼며 30초 유지', '천천히 이완'], icon: '🦾' },
+      { id: 'torso-tennis-before', name: '상체 회전 스트레칭', difficulty: '쉬움', holdTime: '30초', muscles: ['허리', '복사근', '등'], description: '테니스의 회전 동작에 사용되는 몸통 근육을 풀어줍니다.', steps: ['발을 어깨너비로 벌리고 서기', '양팔을 옆으로 뻗기', '허리를 중심으로 좌우로 천천히 회전', '각 방향 끝에서 2~3초 유지', '좌우 각 10회 반복'], icon: '🌀' },
+      { id: 'calf-tennis-before', name: '종아리 워밍업', difficulty: '쉬움', holdTime: '30초', muscles: ['종아리', '아킬레스건'], description: '코트에서의 빠른 이동을 위한 하체 준비 운동입니다.', steps: ['벽에 손을 짚고 서기', '한 발을 뒤로 물러서기', '뒷발 뒤꿈치를 바닥에 붙이고 무릎 펴기', '종아리 당김을 느끼며 30초 유지', '반대쪽도 실시'], icon: '🦵' },
+    ],
+    afterStretches: [
+      { id: 'forearm-tennis-after', name: '전완근 이완 스트레칭', difficulty: '쉬움', holdTime: '30초', muscles: ['전완근', '손목'], description: '경기 후 라켓 그립으로 긴장된 전완근을 풀어줍니다.', steps: ['팔을 앞으로 펴기', '손바닥이 아래로 향하게 하기', '반대 손으로 손가락을 위로 당기기', '전완근 위쪽의 당김을 느끼며 30초 유지', '반대쪽 실시'], icon: '🤲' },
+      { id: 'shoulder-tennis-after', name: '어깨 후면 이완', difficulty: '쉬움', holdTime: '30초', muscles: ['어깨', '회전근개'], description: '서브와 스매시로 피로해진 어깨를 완전히 이완시킵니다.', steps: ['한팔을 위로 올리기', '팔꿈치를 구부려 등 뒤로 내리기', '반대 손으로 팔꿈치를 지그시 당기기', '30초 유지', '반대쪽 실시'], icon: '🙆' },
+      { id: 'quad-tennis-after', name: '대퇴사두근 쿨다운', difficulty: '쉬움', holdTime: '30초', muscles: ['대퇴사두근', '무릎'], description: '코트를 누비며 지친 허벅지 앞쪽 근육을 이완합니다.', steps: ['한 발로 서기 (벽 지지 가능)', '반대 발을 뒤로 구부리기', '발목을 잡고 뒤꿈치를 엉덩이에 붙이기', '30초 유지', '반대쪽 실시'], icon: '🦵' },
+      { id: 'back-tennis-after', name: '등 전체 이완', difficulty: '쉬움', holdTime: '30초', muscles: ['등', '허리'], description: '경기 중 회전 동작으로 긴장된 등과 허리를 이완합니다.', steps: ['등을 대고 눕기', '양 무릎을 가슴으로 당기기', '좌우로 천천히 흔들기', '30초간 이완', '심호흡과 함께 긴장 풀기'], icon: '🛌' },
+      { id: 'neck-tennis-after', name: '목 스트레칭', difficulty: '쉬움', holdTime: '20초', muscles: ['목', '승모근'], description: '경기 집중으로 긴장된 목과 어깨 상부를 이완합니다.', steps: ['편안하게 앉거나 서기', '고개를 천천히 오른쪽으로 기울이기', '오른손으로 머리를 가볍게 당겨 20초 유지', '반대쪽도 동일하게', '앞뒤로도 천천히 이완'], icon: '🧘' },
+    ],
+  },
 ];
 
 export function getExerciseBySlug(slug: string): Exercise | undefined {

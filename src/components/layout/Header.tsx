@@ -36,9 +36,8 @@ export default function Header() {
         <div className="w-full max-w-5xl mx-auto px-4 flex items-center gap-3">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0 mr-2">
-            <span className="text-xl">🤸</span>
             <span className="text-base font-semibold text-gray-200 whitespace-nowrap">
-              스트레칭<strong className="text-green-400 font-bold">가이드</strong>
+              Daily<strong className="text-green-400 font-bold">Stretch</strong>
             </span>
           </Link>
 
@@ -58,6 +57,12 @@ export default function Header() {
           <nav className="hidden sm:flex items-center gap-1 ml-auto">
             <Link href="/" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
               홈
+            </Link>
+            <Link href="/#exercises" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
+              운동별
+            </Link>
+            <Link href="/#pain" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
+              통증별
             </Link>
             <Link href="/back-pain" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
               허리 디스크
@@ -105,6 +110,12 @@ export default function Header() {
             <nav className="flex-1 overflow-y-auto py-2">
               <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
                 🏠 <span>홈</span>
+              </Link>
+              <Link href="/#exercises" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
+                🏋️ <span>운동별 스트레칭</span>
+              </Link>
+              <Link href="/#pain" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
+                💊 <span>통증별 스트레칭</span>
               </Link>
               <Link href="/back-pain" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
                 🦴 <span>허리 디스크 예방</span>

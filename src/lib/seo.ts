@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://stretch-guide.vercel.app';
-const SITE_NAME = '스트레칭 가이드';
+const SITE_NAME = 'DailyStretch';
 
 export function buildMetadata({
   title,

@@ -7,12 +7,20 @@ import { painAreas } from '@/data/pain-areas';
 import { buildWebSiteJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: '스트레칭 가이드 - 운동 전후 스트레칭 완전 정복',
+  title: 'DailyStretch - 운동 전후 스트레칭 완전 정복',
   description:
     '러닝, 헬스, 등산, 골프 등 10가지 운동의 전후 스트레칭을 쉽고 빠르게 확인하세요. 통증 부위별 스트레칭과 허리 디스크 예방 가이드도 제공합니다.',
 };
 
+function getTodayStretch() {
+  const allStretches = exercises.flatMap((ex) => ex.beforeStretches ?? []);
+  const dayIndex = Math.floor(Date.now() / 86400000) % allStretches.length;
+  return allStretches[dayIndex];
+}
+
 export default function HomePage() {
+  const todayStretch = getTodayStretch();
+
   return (
     <>
       <script
@@ -33,7 +41,7 @@ export default function HomePage() {
             10가지 운동 카테고리 · 통증 부위별 스트레칭 · 허리 디스크 예방 전문 가이드
           </p>
           <Link
-            href="#categories"
+            href="#exercises"
             className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-full text-sm transition-all hover:-translate-y-0.5"
           >
             카테고리 보기
@@ -48,8 +56,69 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* ── 오늘의 스트레칭 ───────────────────────────────────────── */}
+      {todayStretch && (
+        <section className="max-w-5xl mx-auto px-4 py-10">
+          <div className="mb-4">
+            <h2 className="text-xl font-bold text-gray-900">오늘의 스트레칭 🌟</h2>
+            <p className="text-sm text-gray-500 mt-1">매일 바뀌는 추천 스트레칭을 확인해보세요</p>
+          </div>
+          <div className="rounded-2xl border-2 border-green-400/40 bg-gradient-to-br from-green-50 via-white to-emerald-50 p-5 sm:p-6 shadow-sm">
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-3xl shrink-0">
+                {todayStretch.icon ?? '🤸'}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className="text-base font-extrabold text-gray-900">{todayStretch.name}</h3>
+                  {todayStretch.difficulty && (
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                      todayStretch.difficulty === '쉬움' ? 'bg-green-100 text-green-700' :
+                      todayStretch.difficulty === '보통' ? 'bg-amber-100 text-amber-700' :
+                      'bg-red-100 text-red-700'
+                    }`}>
+                      {todayStretch.difficulty}
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-gray-600 mt-1.5 leading-relaxed">{todayStretch.description}</p>
+                <div className="flex flex-wrap gap-1.5 mt-2.5">
+                  {todayStretch.muscles.slice(0, 4).map((m) => (
+                    <span key={m} className="text-[10px] bg-white border border-gray-200 rounded-full px-2 py-0.5 text-gray-500">
+                      {m}
+                    </span>
+                  ))}
+                  {todayStretch.holdTime && (
+                    <span className="text-[10px] bg-green-100 text-green-700 rounded-full px-2 py-0.5 font-semibold">
+                      ⏱ {todayStretch.holdTime}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+            {todayStretch.photo_url && (
+              <div className="mt-4 relative w-full h-48 rounded-xl overflow-hidden bg-gray-100">
+                <img
+                  src={todayStretch.photo_url}
+                  alt={`${todayStretch.name} 스트레칭 자세`}
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+            )}
+            <div className="mt-4">
+              <Link
+                href="#exercises"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-green-700 hover:text-green-800 bg-green-100 hover:bg-green-200 px-4 py-2 rounded-lg transition-all"
+              >
+                자세히 보기 →
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── 운동 카테고리 ─────────────────────────────────────────── */}
-      <section id="categories" className="max-w-5xl mx-auto px-4 py-12">
+      <section id="exercises" className="max-w-5xl mx-auto px-4 py-12">
         <div className="mb-8">
           <h2 className="text-xl font-bold text-gray-900 mb-1.5">운동 카테고리</h2>
           <p className="text-sm text-gray-500">운동을 선택하면 전후 스트레칭을 바로 확인할 수 있습니다</p>
@@ -97,7 +166,7 @@ export default function HomePage() {
       </section>
 
       {/* ── 통증 부위별 ──────────────────────────────────────────── */}
-      <section className="bg-gray-50 border-t border-gray-200 py-12">
+      <section id="pain" className="bg-gray-50 border-t border-gray-200 py-12">
         <div className="max-w-5xl mx-auto px-4">
           <div className="mb-8">
             <h2 className="text-xl font-bold text-gray-900 mb-1.5">통증 부위별 스트레칭</h2>

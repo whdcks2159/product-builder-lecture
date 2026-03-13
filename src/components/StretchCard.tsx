@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import type { Stretch, StretchStep } from '@/types';
+import StretchTimer from '@/components/StretchTimer';
 
 interface StretchCardProps {
   stretch: Stretch;
@@ -19,6 +20,7 @@ const difficultyStyle: Record<string, string> = {
 export default function StretchCard({ stretch, categoryName }: StretchCardProps) {
   const [expanded, setExpanded] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
 
   return (
     <article
@@ -144,6 +146,27 @@ export default function StretchCard({ stretch, categoryName }: StretchCardProps)
               </ol>
             )}
           </div>
+
+          {/* 타이머 토글 버튼 */}
+          <div className="mt-4">
+            <button
+              onClick={() => setShowTimer((v) => !v)}
+              className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all ${
+                showTimer
+                  ? 'bg-green-600 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              ⏱ 타이머 {showTimer ? '닫기' : '열기'}
+            </button>
+          </div>
+
+          {/* 타이머 */}
+          {showTimer && (
+            <div className="mt-3">
+              <StretchTimer />
+            </div>
+          )}
 
           {/* Pexels 출처 링크 */}
           {stretch.photo_source_url && (

@@ -7,18 +7,18 @@ import Footer from '@/components/layout/Footer';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://stretch-guide.vercel.app'),
   title: {
-    default: '스트레칭 가이드 - 운동 전후 스트레칭 완전 정복',
-    template: '%s | 스트레칭 가이드',
+    default: 'DailyStretch - 운동 전후 스트레칭 완전 정복',
+    template: '%s | DailyStretch',
   },
   description:
     '러닝, 헬스, 등산, 골프 등 10가지 운동의 전후 스트레칭을 쉽고 빠르게 확인하세요. 허리 디스크 예방 스트레칭도 제공합니다.',
-  keywords: ['스트레칭', '운동 전 스트레칭', '운동 후 스트레칭', '부상 예방', '스트레칭 가이드'],
+  keywords: ['스트레칭', '운동 전 스트레칭', '운동 후 스트레칭', '부상 예방', 'DailyStretch'],
   robots: { index: true, follow: true },
   verification: { google: '8txD9fVhiHjZcsjvDKkxUh9cArvkEYsY4XYjzJLN-24' },
   openGraph: {
     locale: 'ko_KR',
     type: 'website',
-    siteName: '스트레칭 가이드',
+    siteName: 'DailyStretch',
   },
 };
 
