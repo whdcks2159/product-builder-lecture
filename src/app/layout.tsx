@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     '러닝, 헬스, 등산, 골프 등 10가지 운동의 전후 스트레칭을 쉽고 빠르게 확인하세요. 허리 디스크 예방 스트레칭도 제공합니다.',
   keywords: ['스트레칭', '운동 전 스트레칭', '운동 후 스트레칭', '부상 예방', '스트레칭 가이드'],
   robots: { index: true, follow: true },
-  verification: { google: 'googlea8fa1a4298173ca7' },
+  verification: { google: '8txD9fVhiHjZcsjvDKkxUh9cArvkEYsY4XYjzJLN-24' },
   openGraph: {
     locale: 'ko_KR',
     type: 'website',
