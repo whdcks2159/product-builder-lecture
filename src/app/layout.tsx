@@ -26,12 +26,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <head>
-        {/* Google AdSense - 승인 후 아래 주석 해제 */}
-        {/* <script
+        <Script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2764985690023492"
           crossOrigin="anonymous"
-        /> */}
+          strategy="afterInteractive"
+        />
       </head>
       <body className="min-h-screen flex flex-col">
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-MQ14GD8ESS" strategy="afterInteractive" />
