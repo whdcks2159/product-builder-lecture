@@ -38,14 +38,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       unsub = onAuthStateChanged(getFirebaseAuth(), async (u) => {
         setUser(u);
         if (u) {
-          const snap = await getDoc(doc(getFirebaseDb(), 'users', u.uid));
-          if (snap.exists()) setProfile(snap.data() as UserProfile);
+          try {
+            const snap = await getDoc(doc(getFirebaseDb(), 'users', u.uid));
+            if (snap.exists()) setProfile(snap.data() as UserProfile);
+          } catch {
+            // ignore
+          }
         } else {
           setProfile(null);
         }
         setLoading(false);
       });
-    })();
+    })().catch(() => setLoading(false));
     return () => { unsub?.(); };
   }, []);
 

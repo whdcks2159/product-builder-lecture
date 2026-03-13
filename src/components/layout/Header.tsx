@@ -11,7 +11,7 @@ export default function Header() {
   const [query, setQuery] = useState('');
   const router = useRouter();
   const drawerRef = useRef<HTMLDivElement>(null);
-  const { user, profile } = useAuth();
+  const { user, profile, logout } = useAuth();
 
   // Close drawer on outside click
   useEffect(() => {
@@ -73,9 +73,14 @@ export default function Header() {
               커뮤니티
             </Link>
             {user ? (
-              <Link href="/profile" className="px-3 py-1.5 text-sm text-green-400 hover:text-green-300 hover:bg-white/8 rounded-lg transition">
-                @{profile?.nickname ?? user.displayName ?? '프로필'}
-              </Link>
+              <>
+                <Link href="/profile" className="px-3 py-1.5 text-sm text-green-400 hover:text-green-300 hover:bg-white/8 rounded-lg transition">
+                  @{profile?.nickname ?? user.displayName ?? '프로필'}
+                </Link>
+                <button onClick={() => logout().then(() => router.push('/'))} className="px-3 py-1.5 text-sm text-gray-400 hover:text-white hover:bg-white/8 rounded-lg transition">
+                  로그아웃
+                </button>
+              </>
             ) : (
               <Link href="/auth/login" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
                 로그인
@@ -138,9 +143,14 @@ export default function Header() {
                 💬 <span>커뮤니티</span>
               </Link>
               {user ? (
-                <Link href="/profile" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-green-400 hover:bg-white/5 hover:text-green-300 transition">
-                  👤 <span>@{profile?.nickname ?? user.displayName ?? '프로필'}</span>
-                </Link>
+                <>
+                  <Link href="/profile" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-green-400 hover:bg-white/5 hover:text-green-300 transition">
+                    👤 <span>@{profile?.nickname ?? user.displayName ?? '프로필'}</span>
+                  </Link>
+                  <button onClick={() => { logout(); router.push('/'); setMenuOpen(false); }} className="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-white/5 hover:text-white transition w-full text-left">
+                    🚪 <span>로그아웃</span>
+                  </button>
+                </>
               ) : (
                 <Link href="/auth/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
                   🔑 <span>로그인</span>

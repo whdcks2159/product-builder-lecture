@@ -10,6 +10,7 @@ export default function SignupPage() {
   const [form, setForm] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   function set(key: string) {
     return (e: React.ChangeEvent<HTMLInputElement>) => setForm(f => ({ ...f, [key]: e.target.value }));
@@ -23,18 +24,34 @@ export default function SignupPage() {
     if (form.nickname.trim().length < 2) { setError('닉네임은 2자 이상이어야 합니다.'); return; }
     setLoading(true);
     try {
-      await signup(form.email, form.password, form.nickname.trim());
-      router.push('/');
+      const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000));
+      await Promise.race([signup(form.email, form.password, form.nickname.trim()), timeout]);
+      setSuccess(true);
+      setTimeout(() => router.push('/'), 2000);
     } catch (err: unknown) {
       const code = (err as { code?: string }).code;
-      if (code === 'auth/email-already-in-use') setError('이미 사용 중인 이메일입니다.');
-      else setError('회원가입에 실패했습니다. 다시 시도해주세요.');
+      const msg = (err as { message?: string }).message ?? '';
+      if (msg === 'timeout') setError('요청 시간이 초과됐습니다. Firebase 환경변수 또는 네트워크를 확인하세요.');
+      else if (code === 'auth/email-already-in-use') setError('이미 사용 중인 이메일입니다.');
+      else if (code === 'auth/invalid-api-key') setError('Firebase API 키가 잘못됐습니다.');
+      else if (code === 'auth/network-request-failed') setError('네트워크 오류입니다.');
+      else setError(`오류 [${code ?? msg ?? '알 수 없음'}]`);
     } finally {
       setLoading(false);
     }
   }
 
   return (
+    <>
+    {success && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+        <div className="bg-white rounded-2xl shadow-xl px-8 py-6 text-center max-w-xs w-full mx-4">
+          <div className="text-4xl mb-3">🎉</div>
+          <p className="text-lg font-extrabold text-gray-900 mb-1">회원가입 완료!</p>
+          <p className="text-sm text-gray-500">환영합니다, {form.nickname}님!<br/>메인 화면으로 이동합니다.</p>
+        </div>
+      </div>
+    )}
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
@@ -80,5 +97,6 @@ export default function SignupPage() {
         </p>
       </div>
     </div>
+    </>
   );
 }

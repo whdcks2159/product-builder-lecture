@@ -17,6 +17,7 @@ function WriteForm() {
   const [form, setForm] = useState({ title: '', content: '', category: initCat });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) router.push('/auth/login');
@@ -35,20 +36,23 @@ function WriteForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!user || !profile) return;
+    if (!user) return;
+    const nickname = profile?.nickname ?? user.displayName ?? user.email ?? '익명';
     if (!form.title.trim() || !form.content.trim()) { setError('제목과 내용을 입력해주세요.'); return; }
     setSubmitting(true);
     try {
       if (editId) {
         await updateDoc(doc(getFirebaseDb(), 'posts', editId), { title: form.title.trim(), content: form.content.trim(), category: form.category });
-        router.push(`/community/${form.category}/${editId}`);
+        setSuccess(true);
+        setTimeout(() => router.push(`/community/${form.category}/${editId}`), 1500);
       } else {
         const ref = await addDoc(collection(getFirebaseDb(), 'posts'), {
-          userId: user.uid, nickname: profile.nickname,
+          userId: user.uid, nickname,
           category: form.category, title: form.title.trim(), content: form.content.trim(),
           createdAt: serverTimestamp(), viewCount: 0,
         });
-        router.push(`/community/${form.category}/${ref.id}`);
+        setSuccess(true);
+        setTimeout(() => router.push(`/community/${form.category}/${ref.id}`), 1500);
       }
     } catch {
       setError('저장에 실패했습니다. 다시 시도해주세요.');
@@ -59,6 +63,16 @@ function WriteForm() {
   if (loading) return <div className="min-h-[60vh] flex items-center justify-center text-gray-400 text-sm">로딩 중...</div>;
 
   return (
+    <>
+    {success && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+        <div className="bg-white rounded-2xl shadow-xl px-8 py-6 text-center max-w-xs w-full mx-4">
+          <div className="text-4xl mb-3">✅</div>
+          <p className="text-lg font-extrabold text-gray-900 mb-1">{editId ? '수정 완료!' : '작성 완료!'}</p>
+          <p className="text-sm text-gray-500">게시글로 이동합니다.</p>
+        </div>
+      </div>
+    )}
     <div className="max-w-2xl mx-auto px-4 py-8">
       <h1 className="text-xl font-extrabold text-gray-900 mb-6">{editId ? '게시글 수정' : '글 작성'}</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -94,6 +108,7 @@ function WriteForm() {
         </div>
       </form>
     </div>
+    </>
   );
 }
 
