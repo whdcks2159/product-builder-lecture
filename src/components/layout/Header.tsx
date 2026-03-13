@@ -4,12 +4,14 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { exercises } from '@/data/exercises';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
   const router = useRouter();
   const drawerRef = useRef<HTMLDivElement>(null);
+  const { user, profile } = useAuth();
 
   // Close drawer on outside click
   useEffect(() => {
@@ -67,6 +69,18 @@ export default function Header() {
             <Link href="/back-pain" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
               허리 디스크
             </Link>
+            <Link href="/community" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
+              커뮤니티
+            </Link>
+            {user ? (
+              <Link href="/profile" className="px-3 py-1.5 text-sm text-green-400 hover:text-green-300 hover:bg-white/8 rounded-lg transition">
+                @{profile?.nickname ?? user.displayName ?? '프로필'}
+              </Link>
+            ) : (
+              <Link href="/auth/login" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
+                로그인
+              </Link>
+            )}
           </nav>
 
           {/* Mobile menu button */}
@@ -120,6 +134,18 @@ export default function Header() {
               <Link href="/back-pain" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
                 🦴 <span>허리 디스크 예방</span>
               </Link>
+              <Link href="/community" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
+                💬 <span>커뮤니티</span>
+              </Link>
+              {user ? (
+                <Link href="/profile" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-green-400 hover:bg-white/5 hover:text-green-300 transition">
+                  👤 <span>@{profile?.nickname ?? user.displayName ?? '프로필'}</span>
+                </Link>
+              ) : (
+                <Link href="/auth/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
+                  🔑 <span>로그인</span>
+                </Link>
+              )}
 
               <div className="px-4 pt-4 pb-2">
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">운동 카테고리</p>
