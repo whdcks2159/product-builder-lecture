@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { exercises } from '@/data/exercises';
 import { painAreas } from '@/data/pain-areas';
+import { ALL_COMBOS } from '@/data/seo-combos';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://productbuilder-1.vercel.app';
 
@@ -29,5 +30,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
-  return [...staticPages, ...exercisePages, ...painPages];
+  const stretchPages: MetadataRoute.Sitemap = ALL_COMBOS.map((combo) => ({
+    url: `${BASE_URL}/stretch/${combo.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...exercisePages, ...painPages, ...stretchPages];
 }
