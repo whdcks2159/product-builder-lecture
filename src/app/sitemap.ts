@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { exercises } from '@/data/exercises';
 import { painAreas } from '@/data/pain-areas';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://stretch-guide.vercel.app';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://productbuilder-1.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
