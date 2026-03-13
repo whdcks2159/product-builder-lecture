@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   keywords: ['스트레칭', '운동 전 스트레칭', '운동 후 스트레칭', '부상 예방', 'DailyStretch'],
   robots: { index: true, follow: true },
   verification: { google: '8txD9fVhiHjZcsjvDKkxUh9cArvkEYsY4XYjzJLN-24' },
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
   openGraph: {
     locale: 'ko_KR',
     type: 'website',

@@ -164,7 +164,10 @@ export default function StretchCard({ stretch, categoryName }: StretchCardProps)
           {/* 타이머 */}
           {showTimer && (
             <div className="mt-3">
-              <StretchTimer />
+              <StretchTimer
+                defaultSeconds={parseInt(stretch.holdTime) || 30}
+                stretchName={stretch.name}
+              />
             </div>
           )}
 
