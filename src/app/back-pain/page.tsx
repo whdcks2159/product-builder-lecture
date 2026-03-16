@@ -5,6 +5,7 @@ import StretchCard from '@/components/StretchCard';
 import { backPainData } from '@/data/back-pain';
 import { buildMetadata, buildArticleJsonLd } from '@/lib/seo';
 import { withPhotos } from '@/lib/stretch-photos';
+import { withMedia } from '@/data/stretch-media';
 
 export const metadata: Metadata = buildMetadata({
   title: '허리 디스크 예방·완화 스트레칭 - 통증 완화 + 코어 강화 완전 가이드',
@@ -15,8 +16,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function BackPainPage() {
-  const reliefStretches = withPhotos(backPainData.reliefStretches);
-  const coreStretches = withPhotos(backPainData.coreStretches);
+  const reliefStretches = withMedia(withPhotos(backPainData.reliefStretches));
+  const coreStretches = withMedia(withPhotos(backPainData.coreStretches));
 
   const jsonLd = buildArticleJsonLd({
     title: '허리 디스크 예방·완화 스트레칭',

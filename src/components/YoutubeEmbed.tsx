@@ -8,6 +8,13 @@ interface YoutubeEmbedProps {
   className?: string;
 }
 
+// YouTube 썸네일 URL 생성 (고화질 → 중화질 순서)
+function getThumbUrl(id: string, quality: 'hq' | 'mq' = 'hq') {
+  return quality === 'hq'
+    ? `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+    : `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+}
+
 /**
  * Privacy-enhanced YouTube embed with:
  * - youtube-nocookie.com (no tracking until play)
@@ -17,8 +24,10 @@ interface YoutubeEmbedProps {
  */
 export default function YoutubeEmbed({ videoId, title = '스트레칭 영상', className = '' }: YoutubeEmbedProps) {
   const [active, setActive] = useState(false);
+  const [thumbQuality, setThumbQuality] = useState<'hq' | 'mq'>('hq');
+  const [thumbError, setThumbError] = useState(false);
 
-  const thumbUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  const thumbUrl = getThumbUrl(videoId, thumbQuality);
   const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
 
   return (
@@ -31,16 +40,24 @@ export default function YoutubeEmbed({ videoId, title = '스트레칭 영상', c
           aria-label={`${title} 영상 재생`}
         >
           {/* 썸네일 */}
-          <img
-            src={thumbUrl}
-            alt={`${title} 썸네일`}
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
-            onError={(e) => {
-              // Fallback to medium quality thumbnail
-              (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
-            }}
-          />
+          {!thumbError ? (
+            <img
+              src={thumbUrl}
+              alt={`${title} 썸네일`}
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+              onError={() => {
+                if (thumbQuality === 'hq') {
+                  setThumbQuality('mq');
+                } else {
+                  setThumbError(true);
+                }
+              }}
+            />
+          ) : (
+            // 썸네일 로드 실패 시 기본 배경
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
+          )}
           {/* 어두운 오버레이 */}
           <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" />
           {/* 재생 버튼 */}

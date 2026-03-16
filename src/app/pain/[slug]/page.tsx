@@ -6,6 +6,7 @@ import StretchCard from '@/components/StretchCard';
 import { getPainAreaBySlug, getAllPainSlugs } from '@/data/pain-areas';
 import { buildMetadata, buildArticleJsonLd } from '@/lib/seo';
 import { withPhotos } from '@/lib/stretch-photos';
+import { withMedia } from '@/data/stretch-media';
 
 export function generateStaticParams() {
   return getAllPainSlugs().map((slug) => ({ slug }));
@@ -29,7 +30,7 @@ export async function generateMetadata({
 export default function PainPage({ params }: { params: { slug: string } }) {
   const raw = getPainAreaBySlug(params.slug);
   if (!raw) notFound();
-  const pain = { ...raw, stretches: withPhotos(raw.stretches) };
+  const pain = { ...raw, stretches: withMedia(withPhotos(raw.stretches)) };
 
   const jsonLd = buildArticleJsonLd({
     title: pain.seoTitle,

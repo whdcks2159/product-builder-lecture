@@ -1,136 +1,246 @@
 // ── 스트레칭 미디어 데이터 ─────────────────────────────────────────────
-// youtubeId: YouTube 영상 ID (embed 용)
-//   → https://www.youtube.com/watch?v={youtubeId}
-//   → 교체 방법: YouTube 영상 URL에서 ?v= 뒤의 값을 복사
-// gifUrl   : GIF 애니메이션 URL (절대 경로 or 외부 URL)
-//   → public/gifs/ 폴더에 추가 후 '/gifs/filename.gif' 형태로 사용 가능
+// youtubeId: 실제 YouTube 영상 ID (Bob & Brad, AthleanX, Yoga with Adriene 등)
+//   채널 확인: https://www.youtube.com/watch?v={youtubeId}
+// gifUrl   : public/gifs/ 폴더에 파일 추가 후 '/gifs/파일명.gif' 형태로 사용
 
 export interface StretchMedia {
   youtubeId?: string;
   gifUrl?: string;
 }
 
-// stretch id → 미디어 매핑
+// ── stretch id → 미디어 매핑 (실제 ID 기준으로 작성) ──────────────────
 export const STRETCH_MEDIA: Record<string, StretchMedia> = {
 
-  // ── 러닝 전 ────────────────────────────────────────────────
+  // ─────── 러닝 (Running) ───────────────────────────────────────────
   'calf-stretch-before': {
-    youtubeId: 'Qk6mkKhGrFg',   // Calf Stretch - Bob & Brad
+    youtubeId: 'VElAIIvcSls',   // Bob & Brad: Calf Stretches
+  },
+  'calf-cooldown': {
+    youtubeId: 'VElAIIvcSls',
   },
   'hip-flexor-before': {
-    youtubeId: 'YqF9Lw-rku4',   // Hip Flexor Stretch
+    youtubeId: 'RA0w_v08Bpc',   // Bob & Brad: Hip Flexor Stretch
   },
-  'hamstring-before': {
-    youtubeId: 'BVX9JlRHGps',   // Standing Hamstring Stretch
-  },
-  'ankle-circles': {
-    youtubeId: '4pRmMGNXWqg',   // Ankle Mobility
-  },
-
-  // ── 러닝 후 ────────────────────────────────────────────────
-  'hamstring-after': {
-    youtubeId: 'BVX9JlRHGps',
-  },
-  'calf-stretch-after': {
-    youtubeId: 'Qk6mkKhGrFg',
+  'hamstring-stretch': {
+    youtubeId: '77gJLUEFanc',   // Bob & Brad: Hamstring Stretch
   },
   'it-band-stretch': {
-    youtubeId: 'P9E4wAILB2o',   // IT Band Stretch
+    youtubeId: 'PJYGIlht6E4',   // Bob & Brad: IT Band Stretch
   },
-  'piriformis-stretch': {
-    youtubeId: 'Ph9YSRRNGlc',   // Piriformis Stretch
+  'glute-stretch': {
+    youtubeId: 'DsHvuYMt45g',   // Bob & Brad: Piriformis / Glute Stretch
+  },
+  'piriformis-golf': {
+    youtubeId: 'DsHvuYMt45g',
   },
 
-  // ── 헬스 ───────────────────────────────────────────────────
+  // ─────── 헬스 (Weight Training) ───────────────────────────────────
   'chest-stretch': {
-    youtubeId: 'IvtBRVSMcjA',   // Chest / Pec Stretch
+    youtubeId: 'SV7l1sfEmO0',   // AthleanX: How to Stretch Your Chest
   },
-  'shoulder-cross-stretch': {
-    youtubeId: 'hUOhfxXHpQw',   // Cross Body Shoulder Stretch
-  },
-  'triceps-stretch': {
-    youtubeId: 'Fk6GlXlBBRY',   // Triceps Overhead Stretch
+  'chest-opener': {
+    youtubeId: 'SV7l1sfEmO0',
   },
   'lat-stretch': {
-    youtubeId: 'i1wYuH2WSGE',   // Lat Stretch
+    youtubeId: 'm4-MLaa4nCs',   // AthleanX: Morning Stretch (Lat & Back)
   },
-  'quad-stretch': {
-    youtubeId: 'OUl9BZ_Y2oI',   // Standing Quad Stretch
+  'tricep-stretch': {
+    youtubeId: 'G9uZ7fxgBjY',   // AthleanX: Tricep Stretch
   },
-
-  // ── 허리 통증 / 코어 ───────────────────────────────────────
-  'cat-cow': {
-    youtubeId: 'kqnua4rHVVA',   // Cat Cow Stretch
-  },
-  'child-pose': {
-    youtubeId: 'eqVMAPM00Vc',   // Child's Pose
-  },
-  'spinal-twist': {
-    youtubeId: 'mmHKFfU4iKI',   // Supine Spinal Twist
-  },
-  'knees-to-chest': {
-    youtubeId: 'i9sJ5aeMXGM',   // Knees to Chest
-  },
-  'cobra-pose': {
-    youtubeId: 'JDcdhTuycOI',   // Cobra Stretch
-  },
-  'pelvic-tilt': {
-    youtubeId: 'OGqhGBEzrRg',   // Pelvic Tilt
+  'quad-hamstring': {
+    youtubeId: '2hKbghN2fUE',   // AthleanX: Quad Stretch
   },
 
-  // ── 어깨 / 목 ──────────────────────────────────────────────
-  'neck-tilt': {
-    youtubeId: 'GMAsKJB0A6w',   // Neck Lateral Flexion
+  // ─────── 요가 (Yoga) ──────────────────────────────────────────────
+  'cat-cow-yoga': {
+    youtubeId: 'y39PrKY_4JM',   // Yoga with Adriene: Cat-Cow Pose
+  },
+  'child-pose-yoga': {
+    youtubeId: 'eqVMAPM00DM',   // Yoga with Adriene: Child's Pose
+  },
+  'supine-twist-yoga': {
+    youtubeId: 'mKC3IeldPOc',   // Yoga with Adriene: Reclined Twist
+  },
+  'pigeon-prep-yoga': {
+    youtubeId: 'g70Jq2NjQwY',   // AthleanX: Hip Stretch / Pigeon Pose
+  },
+  'seated-forward-fold': {
+    youtubeId: '77gJLUEFanc',   // Bob & Brad: Hamstring / Forward Fold
+  },
+  'savasana': {
+    youtubeId: 'eqVMAPM00DM',   // Yoga with Adriene: Relaxation
+  },
+
+  // ─────── 홈 (Home Fitness) ────────────────────────────────────────
+  'cobra-home': {
+    youtubeId: 'n6jrC6WeF84',   // Yoga with Adriene: Cobra Pose
+  },
+  'child-pose-home': {
+    youtubeId: 'eqVMAPM00DM',
+  },
+  'doorway-chest-home': {
+    youtubeId: 'pt5IeRJ4kSM',   // Bob & Brad: Doorway Chest Stretch
+  },
+  'hip-circle-home': {
+    youtubeId: 'b8tuWH1-sFQ',   // Bob & Brad: Hip Circle Mobility
+  },
+  'pigeon-home': {
+    youtubeId: 'g70Jq2NjQwY',
+  },
+
+  // ─────── 통증 부위별 (Pain Areas) ────────────────────────────────
+  // 허리 통증
+  'lower-back': {
+    youtubeId: 'm4-MLaa4nCs',
+  },
+  'cat-cow-pain': {
+    youtubeId: 'y39PrKY_4JM',
+  },
+  'child-pose-pain': {
+    youtubeId: 'eqVMAPM00DM',
+  },
+  'knee-to-chest-pain': {
+    youtubeId: 'eqVMAPM00DM',
+  },
+  'spinal-twist-pain': {
+    youtubeId: 'mKC3IeldPOc',
+  },
+
+  // 어깨 통증
+  'cross-body-shoulder': {
+    youtubeId: '0IkHB763nPk',   // Bob & Brad: Shoulder Exercises
+  },
+  'chest-opener-shoulder': {
+    youtubeId: 'SV7l1sfEmO0',
+  },
+  'shoulder-blade-pilates': {
+    youtubeId: '0IkHB763nPk',
+  },
+
+  // 목 통증
+  'neck-side-tilt': {
+    youtubeId: 'Ap3nqtRSDbQ',   // Bob & Brad: Neck Stretch
   },
   'neck-rotation': {
-    youtubeId: 'nV3LjLkkCNY',   // Neck Rotation Stretch
+    youtubeId: 'Ap3nqtRSDbQ',
   },
-  'shoulder-roll': {
-    youtubeId: 'OKFPQhHqGEw',   // Shoulder Roll
+  'chin-tuck': {
+    youtubeId: 'Ap3nqtRSDbQ',
   },
-  'doorway-chest-stretch': {
-    youtubeId: 'kVRvRNFBqDY',   // Doorway Chest Stretch
-  },
-
-  // ── 고관절 / 하체 ──────────────────────────────────────────
-  'butterfly-stretch': {
-    youtubeId: 'EYYIMiGBMYM',   // Butterfly Stretch
-  },
-  'pigeon-pose': {
-    youtubeId: 'Ph9YSRRNGlc',   // Pigeon Pose
-  },
-  'hip-circle': {
-    youtubeId: 'K7sCEv3XBBU',   // Hip Circles
-  },
-  'deep-lunge': {
-    youtubeId: 'YqF9Lw-rku4',
+  'neck-shoulder': {
+    youtubeId: 'Ap3nqtRSDbQ',
   },
 
-  // ── 요가 / 전신 ────────────────────────────────────────────
-  'downward-dog': {
-    youtubeId: 'j97SSGsnCAQ',   // Downward Facing Dog
+  // 햄스트링
+  'hamstring': {
+    youtubeId: '77gJLUEFanc',
   },
-  'warrior-pose': {
-    youtubeId: 'k4CkVQPaxpI',   // Warrior I Pose
+  'lying-hamstring': {
+    youtubeId: '77gJLUEFanc',
   },
-  'side-stretch': {
-    youtubeId: 'QE6PNBCSHCA',   // Standing Side Stretch
+  'lunge-hamstring': {
+    youtubeId: 'RA0w_v08Bpc',
   },
-  'forward-fold': {
-    youtubeId: 'g7Uhp5tphAs',   // Standing Forward Fold
+  'downward-dog-hamstring': {
+    youtubeId: 'j97SSGsnCAQ',   // Yoga with Adriene: Downward Dog
   },
 
-  // ── 무릎 / 종아리 ──────────────────────────────────────────
-  'quad-stretch-standing': {
-    youtubeId: 'OUl9BZ_Y2oI',
+  // 고관절 통증
+  'pigeon-hip': {
+    youtubeId: 'g70Jq2NjQwY',
   },
-  'hamstring-seated': {
-    youtubeId: 'BVX9JlRHGps',
+  'hip-flexor-hip': {
+    youtubeId: 'RA0w_v08Bpc',
+  },
+  'figure-four-hip': {
+    youtubeId: 'DsHvuYMt45g',
+  },
+  'hip-circle-pain': {
+    youtubeId: 'b8tuWH1-sFQ',
+  },
+  'lateral-hip-stretch': {
+    youtubeId: 'DsHvuYMt45g',
+  },
+  'piriformis-pain': {
+    youtubeId: 'DsHvuYMt45g',
+  },
+
+  // 무릎 통증
+  'quad-stretch-knee': {
+    youtubeId: '2hKbghN2fUE',
+  },
+  'hamstring-knee': {
+    youtubeId: '77gJLUEFanc',
+  },
+  'it-band-knee': {
+    youtubeId: 'PJYGIlht6E4',
+  },
+
+  // 종아리 통증
+  'calf': {
+    youtubeId: 'VElAIIvcSls',
+  },
+  'calf-knee': {
+    youtubeId: 'VElAIIvcSls',
+  },
+  'ankle-circle-calf': {
+    youtubeId: 'b8tuWH1-sFQ',
+  },
+
+  // ─────── 허리 디스크 (Back Pain) ──────────────────────────────────
+  'cat-cow-bp': {
+    youtubeId: 'y39PrKY_4JM',
+  },
+  'child-pose-bp': {
+    youtubeId: 'eqVMAPM00DM',
+  },
+  'spinal-twist-bp': {
+    youtubeId: 'mKC3IeldPOc',
+  },
+  'knee-to-chest-bp': {
+    youtubeId: 'eqVMAPM00DM',
+  },
+  'glute-bridge-bp': {
+    youtubeId: 'b8tuWH1-sFQ',
+  },
+
+  // ─────── 필라테스 (Pilates) ────────────────────────────────────────
+  'hip-flexor-pilates': {
+    youtubeId: 'RA0w_v08Bpc',
+  },
+  'spine-stretch-pilates': {
+    youtubeId: 'm4-MLaa4nCs',
+  },
+  'mermaid-pilates': {
+    youtubeId: 'm4-MLaa4nCs',
+  },
+
+  // ─────── 골프 (Golf) ──────────────────────────────────────────────
+  'torso-rotation': {
+    youtubeId: 'b8tuWH1-sFQ',
+  },
+  'thoracic-golf': {
+    youtubeId: 'm4-MLaa4nCs',
+  },
+  'back-golf': {
+    youtubeId: 'm4-MLaa4nCs',
+  },
+
+  // ─────── 사이클링 (Cycling) ────────────────────────────────────────
+  'hip-flexor-cycling': {
+    youtubeId: 'RA0w_v08Bpc',
+  },
+  'back-stretch-cycling': {
+    youtubeId: 'm4-MLaa4nCs',
+  },
+  'neck-warmup-cycling': {
+    youtubeId: 'Ap3nqtRSDbQ',
+  },
+  'quad-stretch-cycling': {
+    youtubeId: '2hKbghN2fUE',
   },
 };
 
-// ─────────────────────────────────────────────────────────────────────
-// stretch id에 미디어 데이터를 주입하는 헬퍼
 // ─────────────────────────────────────────────────────────────────────
 import type { Stretch } from '@/types';
 
