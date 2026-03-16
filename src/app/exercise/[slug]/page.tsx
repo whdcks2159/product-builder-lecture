@@ -7,6 +7,7 @@ import RelatedStretches from '@/components/RelatedStretches';
 import { getExerciseBySlug, getAllExerciseSlugs } from '@/data/exercises';
 import { buildMetadata, buildArticleJsonLd } from '@/lib/seo';
 import { withPhotos } from '@/lib/stretch-photos';
+import { withMedia } from '@/data/stretch-media';
 
 // ── SSG: 모든 운동 경로를 빌드 타임에 생성 ───────────────────
 export function generateStaticParams() {
@@ -35,8 +36,8 @@ export default function ExercisePage({ params }: { params: { slug: string } }) {
   if (!raw) notFound();
   const exercise = {
     ...raw,
-    beforeStretches: withPhotos(raw.beforeStretches),
-    afterStretches: withPhotos(raw.afterStretches),
+    beforeStretches: withMedia(withPhotos(raw.beforeStretches)),
+    afterStretches: withMedia(withPhotos(raw.afterStretches)),
   };
 
   const jsonLd = buildArticleJsonLd({

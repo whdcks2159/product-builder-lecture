@@ -5,6 +5,7 @@ export interface StretchStep {
   description: string;
   photo_prompt?: string;
   photo_keyword?: string;
+  image_url?: string;    // 단계별 이미지
 }
 
 export interface StretchPhoto {
@@ -28,6 +29,9 @@ export interface Stretch {
   icon: string;
   difficulty?: '쉬움' | '보통' | '어려움';
   imageAlt?: string;
+  // 미디어
+  youtubeId?: string;    // YouTube 영상 ID (embed)
+  gifUrl?: string;       // GIF 애니메이션 URL
   // 사진 정보 (fetch-stretch-images.mjs 실행 후 자동 채워짐)
   photo_url?: string;
   photo_credit?: string;

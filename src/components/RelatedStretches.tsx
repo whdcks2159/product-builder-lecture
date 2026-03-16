@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { exercises } from '@/data/exercises';
 import { painAreas } from '@/data/pain-areas';
+import { STRETCH_MEDIA } from '@/data/stretch-media';
 import type { Stretch } from '@/types';
 
 interface RelatedStretchItem {
@@ -44,25 +45,35 @@ export default function RelatedStretches({ currentId, muscles, limit = 4 }: Prop
     <div className="mt-10">
       <h3 className="text-base font-bold text-gray-900 mb-4">추천 스트레칭</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {results.map(({ stretch, label, href }) => (
-          <Link
-            key={stretch.id}
-            href={href}
-            className="flex items-center gap-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-4 transition-all hover:-translate-y-0.5"
-          >
-            <span className="text-2xl shrink-0">{stretch.icon ?? '🤸'}</span>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold text-gray-900 truncate">{stretch.name}</p>
-              <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-[10px] text-gray-400">{label}</span>
-                <span className="text-[10px] bg-gray-200 text-gray-500 px-1.5 py-0.5 rounded-full">
-                  {stretch.muscles.slice(0, 2).join(' · ')}
-                </span>
+        {results.map(({ stretch, label }) => {
+          const hasVideo = !!STRETCH_MEDIA[stretch.id]?.youtubeId;
+          const hasGif   = !!STRETCH_MEDIA[stretch.id]?.gifUrl;
+          return (
+            <Link
+              key={stretch.id}
+              href={`/stretch-view/${stretch.id}`}
+              className="flex items-center gap-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-4 transition-all hover:-translate-y-0.5"
+            >
+              <span className="text-2xl shrink-0">{stretch.icon ?? '🤸'}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold text-gray-900 truncate">{stretch.name}</p>
+                <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                  <span className="text-[10px] text-gray-400">{label}</span>
+                  <span className="text-[10px] bg-gray-200 text-gray-500 px-1.5 py-0.5 rounded-full">
+                    {stretch.muscles.slice(0, 2).join(' · ')}
+                  </span>
+                  {hasVideo && (
+                    <span className="text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full font-bold">▶ 영상</span>
+                  )}
+                  {hasGif && (
+                    <span className="text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded-full font-bold">GIF</span>
+                  )}
+                </div>
               </div>
-            </div>
-            <span className="text-gray-300 text-sm">→</span>
-          </Link>
-        ))}
+              <span className="text-gray-300 text-sm">→</span>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
