@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import type { Stretch, StretchStep } from '@/types';
 import StretchTimer from '@/components/StretchTimer';
+import FavoriteButton from '@/components/FavoriteButton';
 
 interface StretchCardProps {
   stretch: Stretch;
@@ -67,11 +68,14 @@ export default function StretchCard({ stretch, categoryName }: StretchCardProps)
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
             <h3 className="text-sm font-bold text-gray-900 leading-snug">{stretch.name}</h3>
-            {stretch.difficulty && (
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${difficultyStyle[stretch.difficulty]}`}>
-                {stretch.difficulty}
-              </span>
-            )}
+            <div className="flex items-center gap-1.5 shrink-0">
+              {stretch.difficulty && (
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${difficultyStyle[stretch.difficulty]}`}>
+                  {stretch.difficulty}
+                </span>
+              )}
+              <FavoriteButton stretchId={stretch.id} stretchName={stretch.name} size="sm" />
+            </div>
           </div>
 
           {categoryName && (

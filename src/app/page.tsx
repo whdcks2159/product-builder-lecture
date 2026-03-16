@@ -4,6 +4,7 @@ import AdUnit from '@/components/AdUnit';
 import CategoryCard from '@/components/CategoryCard';
 import { exercises } from '@/data/exercises';
 import { painAreas } from '@/data/pain-areas';
+import { challenges } from '@/data/challenges';
 import { buildWebSiteJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
@@ -12,14 +13,18 @@ export const metadata: Metadata = {
     '러닝, 헬스, 등산, 골프 등 10가지 운동의 전후 스트레칭을 쉽고 빠르게 확인하세요. 통증 부위별 스트레칭과 허리 디스크 예방 가이드도 제공합니다.',
 };
 
-function getTodayStretch() {
+function getTodayStretches() {
   const allStretches = exercises.flatMap((ex) => ex.beforeStretches ?? []);
-  const dayIndex = Math.floor(Date.now() / 86400000) % allStretches.length;
-  return allStretches[dayIndex];
+  const base = Math.floor(Date.now() / 86400000) % allStretches.length;
+  return [
+    allStretches[base % allStretches.length],
+    allStretches[(base + 7) % allStretches.length],
+    allStretches[(base + 17) % allStretches.length],
+  ].filter(Boolean);
 }
 
 export default function HomePage() {
-  const todayStretch = getTodayStretch();
+  const todayStretches = getTodayStretches();
 
   return (
     <>
@@ -40,12 +45,20 @@ export default function HomePage() {
           <p className="text-sm text-white/55 leading-relaxed mb-8">
             10가지 운동 카테고리 · 통증 부위별 스트레칭 · 허리 디스크 예방 전문 가이드
           </p>
-          <Link
-            href="#exercises"
-            className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-full text-sm transition-all hover:-translate-y-0.5"
-          >
-            카테고리 보기
-          </Link>
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <Link
+              href="#exercises"
+              className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-full text-sm transition-all hover:-translate-y-0.5"
+            >
+              카테고리 보기
+            </Link>
+            <Link
+              href="/routine"
+              className="inline-block bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-full text-sm transition-all hover:-translate-y-0.5 border border-white/20"
+            >
+              ✨ 루틴 생성기
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -57,65 +70,39 @@ export default function HomePage() {
       </div>
 
       {/* ── 오늘의 스트레칭 ───────────────────────────────────────── */}
-      {todayStretch && (
-        <section className="max-w-5xl mx-auto px-4 py-10">
-          <div className="mb-4">
+      <section className="max-w-5xl mx-auto px-4 py-10">
+        <div className="flex items-center justify-between mb-5">
+          <div>
             <h2 className="text-xl font-bold text-gray-900">오늘의 스트레칭 🌟</h2>
-            <p className="text-sm text-gray-500 mt-1">매일 바뀌는 추천 스트레칭을 확인해보세요</p>
+            <p className="text-sm text-gray-500 mt-1">매일 바뀌는 추천 스트레칭 3가지</p>
           </div>
-          <div className="rounded-2xl border-2 border-green-400/40 bg-gradient-to-br from-green-50 via-white to-emerald-50 p-5 sm:p-6 shadow-sm">
-            <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-3xl shrink-0">
-                {todayStretch.icon ?? '🤸'}
+          <Link href="/routine" className="text-xs font-bold text-green-600 hover:text-green-700 bg-green-50 hover:bg-green-100 px-3 py-2 rounded-lg transition">
+            루틴 생성 →
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {todayStretches.map((stretch, i) => (
+            <div key={stretch.id} className="rounded-2xl border-2 border-green-400/30 bg-gradient-to-br from-green-50 via-white to-emerald-50 p-4 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-6 h-6 rounded-full bg-green-500 text-white text-xs font-bold flex items-center justify-center shrink-0">{i + 1}</span>
+                <span className="text-xl">{stretch.icon ?? '🤸'}</span>
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="text-base font-extrabold text-gray-900">{todayStretch.name}</h3>
-                  {todayStretch.difficulty && (
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                      todayStretch.difficulty === '쉬움' ? 'bg-green-100 text-green-700' :
-                      todayStretch.difficulty === '보통' ? 'bg-amber-100 text-amber-700' :
-                      'bg-red-100 text-red-700'
-                    }`}>
-                      {todayStretch.difficulty}
-                    </span>
-                  )}
+              <h3 className="text-sm font-extrabold text-gray-900 mb-1">{stretch.name}</h3>
+              <p className="text-xs text-gray-500 leading-relaxed mb-2 line-clamp-2">{stretch.description}</p>
+              {stretch.holdTime && (
+                <span className="text-[10px] bg-green-100 text-green-700 rounded-full px-2 py-0.5 font-semibold">
+                  ⏱ {stretch.holdTime}
+                </span>
+              )}
+              {stretch.photo_url && (
+                <div className="mt-3 relative w-full h-32 rounded-xl overflow-hidden bg-gray-100">
+                  <img src={stretch.photo_url} alt={stretch.name} className="w-full h-full object-cover" />
                 </div>
-                <p className="text-sm text-gray-600 mt-1.5 leading-relaxed">{todayStretch.description}</p>
-                <div className="flex flex-wrap gap-1.5 mt-2.5">
-                  {todayStretch.muscles.slice(0, 4).map((m) => (
-                    <span key={m} className="text-[10px] bg-white border border-gray-200 rounded-full px-2 py-0.5 text-gray-500">
-                      {m}
-                    </span>
-                  ))}
-                  {todayStretch.holdTime && (
-                    <span className="text-[10px] bg-green-100 text-green-700 rounded-full px-2 py-0.5 font-semibold">
-                      ⏱ {todayStretch.holdTime}
-                    </span>
-                  )}
-                </div>
-              </div>
+              )}
             </div>
-            {todayStretch.photo_url && (
-              <div className="mt-4 relative w-full h-48 rounded-xl overflow-hidden bg-gray-100">
-                <img
-                  src={todayStretch.photo_url}
-                  alt={`${todayStretch.name} 스트레칭 자세`}
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
-            )}
-            <div className="mt-4">
-              <Link
-                href="#exercises"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-green-700 hover:text-green-800 bg-green-100 hover:bg-green-200 px-4 py-2 rounded-lg transition-all"
-              >
-                자세히 보기 →
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
+          ))}
+        </div>
+      </section>
 
       {/* ── 운동 카테고리 ─────────────────────────────────────────── */}
       <section id="exercises" className="max-w-5xl mx-auto px-4 py-12">
@@ -185,6 +172,46 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── 챌린지 & 루틴 & 모임 CTA ───────────────────────────────── */}
+      <section className="max-w-5xl mx-auto px-4 pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Routine Generator CTA */}
+          <Link
+            href="/routine"
+            className="group block rounded-2xl p-6 bg-gradient-to-br from-green-600 to-emerald-700 text-white hover:shadow-xl hover:-translate-y-0.5 transition-all"
+          >
+            <div className="text-3xl mb-3">✨</div>
+            <h3 className="text-lg font-extrabold mb-1">루틴 생성기</h3>
+            <p className="text-sm text-white/70 leading-relaxed">운동 종류와 목적을 선택하면 맞춤 스트레칭 루틴을 즉시 만들어 드립니다</p>
+            <div className="mt-4 text-sm font-bold text-white/80 group-hover:text-white">시작하기 →</div>
+          </Link>
+          {/* Challenge CTA */}
+          <Link
+            href="/challenge"
+            className="group block rounded-2xl p-6 bg-gradient-to-br from-purple-600 to-violet-700 text-white hover:shadow-xl hover:-translate-y-0.5 transition-all"
+          >
+            <div className="text-3xl mb-3">🏆</div>
+            <h3 className="text-lg font-extrabold mb-1">스트레칭 챌린지</h3>
+            <p className="text-sm text-white/70 leading-relaxed">7일부터 30일까지! 꾸준한 스트레칭 습관을 챌린지로 만들어보세요</p>
+            <div className="flex gap-2 mt-3 flex-wrap">
+              {challenges.slice(0, 2).map((c) => (
+                <span key={c.id} className="text-xs bg-white/15 text-white px-2 py-0.5 rounded-full">{c.title}</span>
+              ))}
+            </div>
+          </Link>
+          {/* Meetups CTA */}
+          <Link
+            href="/meetups"
+            className="group block rounded-2xl p-6 bg-gradient-to-br from-blue-600 to-cyan-700 text-white hover:shadow-xl hover:-translate-y-0.5 transition-all"
+          >
+            <div className="text-3xl mb-3">🤝</div>
+            <h3 className="text-lg font-extrabold mb-1">운동 모임</h3>
+            <p className="text-sm text-white/70 leading-relaxed">함께 운동할 모임을 찾거나 새로운 모임을 만들어보세요</p>
+            <div className="mt-4 text-sm font-bold text-white/80 group-hover:text-white">모임 찾기 →</div>
+          </Link>
         </div>
       </section>
 

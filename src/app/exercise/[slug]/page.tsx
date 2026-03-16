@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import AdUnit from '@/components/AdUnit';
 import StretchCard from '@/components/StretchCard';
+import RelatedStretches from '@/components/RelatedStretches';
 import { getExerciseBySlug, getAllExerciseSlugs } from '@/data/exercises';
 import { buildMetadata, buildArticleJsonLd } from '@/lib/seo';
 import { withPhotos } from '@/lib/stretch-photos';
@@ -125,6 +126,12 @@ export default function ExercisePage({ params }: { params: { slug: string } }) {
 
         {/* ── 광고: 하단 ────────────────────────────────────── */}
         <AdUnit slot="leaderboard" />
+
+        {/* ── 추천 스트레칭 ───────────────────────────────── */}
+        <RelatedStretches
+          currentId={exercise.beforeStretches[0]?.id ?? ''}
+          muscles={exercise.relatedMuscles}
+        />
 
         {/* ── 다른 운동 보기 ──────────────────────────────── */}
         <section>

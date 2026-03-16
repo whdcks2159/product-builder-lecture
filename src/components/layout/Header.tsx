@@ -57,21 +57,6 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden sm:flex items-center gap-1 ml-auto">
-            <Link href="/" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              홈
-            </Link>
-            <Link href="/#exercises" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              운동별
-            </Link>
-            <Link href="/#pain" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              통증별
-            </Link>
-            <Link href="/back-pain" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              허리 디스크
-            </Link>
-            <Link href="/community" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              커뮤니티
-            </Link>
             {user ? (
               <>
                 <Link href="/profile" className="px-3 py-1.5 text-sm text-green-400 hover:text-green-300 hover:bg-white/8 rounded-lg transition">
@@ -86,6 +71,27 @@ export default function Header() {
                 로그인
               </Link>
             )}
+            <Link href="/" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
+              홈
+            </Link>
+            <Link href="/routine" className="px-3 py-1.5 text-sm text-green-400 hover:text-green-300 hover:bg-white/8 rounded-lg transition font-semibold">
+              루틴
+            </Link>
+            <Link href="/#exercises" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
+              운동별
+            </Link>
+            <Link href="/#pain" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
+              통증별
+            </Link>
+            <Link href="/challenge" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
+              챌린지
+            </Link>
+            <Link href="/meetups" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
+              운동 모임
+            </Link>
+            <Link href="/community" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
+              커뮤니티
+            </Link>
           </nav>
 
           {/* Mobile menu button */}
@@ -130,6 +136,9 @@ export default function Header() {
               <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
                 🏠 <span>홈</span>
               </Link>
+              <Link href="/routine" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-green-400 hover:bg-white/5 hover:text-green-300 transition font-semibold">
+                ✨ <span>루틴 생성기</span>
+              </Link>
               <Link href="/#exercises" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
                 🏋️ <span>운동별 스트레칭</span>
               </Link>
@@ -138,6 +147,15 @@ export default function Header() {
               </Link>
               <Link href="/back-pain" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
                 🦴 <span>허리 디스크 예방</span>
+              </Link>
+              <Link href="/meetups" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
+                🤝 <span>운동 모임</span>
+              </Link>
+              <Link href="/challenge" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
+                🏆 <span>스트레칭 챌린지</span>
+              </Link>
+              <Link href="/my-favorites" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
+                ❤️ <span>내 즐겨찾기</span>
               </Link>
               <Link href="/community" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
                 💬 <span>커뮤니티</span>
