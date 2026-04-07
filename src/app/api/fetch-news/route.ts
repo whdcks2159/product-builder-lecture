@@ -15,6 +15,7 @@ interface NewsAPIArticle {
 }
 
 interface GeminiSummary {
+  title_ko:     string;             // 한국어 번역 제목
   summary:      [string, string, string];
   impact_score: number;
   sentiment:    Sentiment;
@@ -75,16 +76,17 @@ async function summarizeWithGemini(
   sector:      Sector,
   apiKey:      string,
 ): Promise<GeminiSummary | null> {
-  const prompt = `당신은 월가 출신 투자 분석가입니다. 다음 뉴스를 분석하여 아래 JSON 형식으로만 응답하세요 (마크다운 없이).
+  const prompt = `당신은 월가 출신 투자 분석가입니다. 다음 영어 뉴스를 분석하여 아래 JSON 형식으로만 응답하세요 (마크다운 없이, 모든 텍스트는 한국어).
 
-뉴스 제목: ${title}
-뉴스 내용: ${content.slice(0, 1500)}
+뉴스 제목(영어): ${title}
+뉴스 내용(영어): ${content ? content.slice(0, 1500) : '(본문 없음 — 제목만으로 분석)'}
 예상 섹터: ${sector}
 
 응답 형식:
 {
+  "title_ko": "제목을 자연스러운 한국어로 번역",
   "summary": [
-    "① 핵심 사실 (아빠도 이해할 쉬운 언어)",
+    "① 핵심 사실 (아빠도 이해할 쉬운 한국어로)",
     "② 시장/투자에 미칠 직접 영향",
     "③ 투자자 액션 포인트"
   ],
@@ -133,6 +135,7 @@ async function summarizeWithGemini(
 
     // 유효성 보정
     return {
+      title_ko: parsed.title_ko ?? title,
       summary: Array.isArray(parsed.summary) && parsed.summary.length === 3
         ? parsed.summary as [string, string, string]
         : ['요약 생성 실패', '다시 시도해주세요', ''],
@@ -224,14 +227,14 @@ export async function GET(req: NextRequest) {
 
     await Promise.allSettled(
       chunk.map(async article => {
-        // Gemini 요약
+        // Gemini 번역+요약 (본문 없어도 제목만으로 분석)
         const body = [article.description, article.content]
           .filter(Boolean)
           .join(' ');
 
-        const gemini = body
-          ? await summarizeWithGemini(article.title, body, article.sector, geminiApiKey)
-          : null;
+        const gemini = await summarizeWithGemini(
+          article.title, body, article.sector, geminiApiKey,
+        );
 
         if (gemini) summarizedCount++;
 
@@ -240,7 +243,8 @@ export async function GET(req: NextRequest) {
           .from('daily_news')
           .upsert(
             {
-              title:           article.title.slice(0, 500),
+              // 한국어 번역 제목 우선 저장, 없으면 영어 원문
+              title:           (gemini?.title_ko ?? article.title).slice(0, 500),
               content_summary: gemini
                 ? gemini.summary.join('\n')
                 : article.description?.slice(0, 500) ?? null,
