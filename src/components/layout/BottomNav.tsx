@@ -1,14 +1,14 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, BarChart2, Database, Search, Wrench } from 'lucide-react';
+import { Home, BarChart2, Database, Newspaper, Wrench } from 'lucide-react';
 
 const navItems = [
-  { href: '/',              icon: Home,      label: 'Home'   },
-  { href: '/sectors',       icon: BarChart2, label: '섹터'   },
-  { href: '/news-feed',     icon: Database,  label: 'DB뉴스' },
-  { href: '/news-analyzer', icon: Search,    label: 'AI분석' },
-  { href: '/calculator',    icon: Wrench,    label: '도구'   },
+  { href: '/',          icon: Home,      label: 'Home'   },
+  { href: '/sectors',   icon: BarChart2, label: '섹터'   },
+  { href: '/news-feed', icon: Database,  label: 'DB뉴스' },
+  { href: '/news-dashboard', icon: Newspaper, label: '뉴스' },
+  { href: '/calculator', icon: Wrench,   label: '도구'   },
 ];
 
 export default function BottomNav() {
