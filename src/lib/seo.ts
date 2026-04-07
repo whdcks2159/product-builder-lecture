@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-const BASE_URL = 'https://productbuilder-1-whdcks2541-7861s-projects.vercel.app';
+const BASE_URL = 'https://productbuilder-1.vercel.app';
 const SITE_NAME = 'NexusInsight';
 const SITE_DESCRIPTION = '자산 토큰화(RWA), 양자 컴퓨팅, 우주 경제, BCI 등 미래 성장 섹터에 대한 전문가 인사이트 대시보드';
 

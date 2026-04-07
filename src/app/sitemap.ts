@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { sectors } from '@/data/sectors';
 import { articles } from '@/data/articles';
 
-const BASE = 'https://productbuilder-1-whdcks2541-7861s-projects.vercel.app';
+const BASE = 'https://productbuilder-1.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [

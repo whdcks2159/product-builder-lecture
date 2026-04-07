@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const BASE = 'https://productbuilder-1-whdcks2541-7861s-projects.vercel.app';
+const BASE = 'https://productbuilder-1.vercel.app';
 
 export default function robots(): MetadataRoute.Robots {
   return {
