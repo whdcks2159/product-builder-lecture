@@ -1,13 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Static export for Vercel / CDN deployment
-  // output: 'export',  // ← 정적 배포 시 주석 해제
-
+  compress: true,
   images: {
-    remotePatterns: [
-      // Pexels CDN (fetch-stretch-images 스크립트로 수집한 사진 미리보기용)
-      { protocol: 'https', hostname: 'images.pexels.com' },
-    ],
+    formats: ['image/avif', 'image/webp'],
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
+      },
+    ];
   },
 };
 

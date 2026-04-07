@@ -1,41 +1,30 @@
-import type { MetadataRoute } from 'next';
-import { exercises } from '@/data/exercises';
-import { painAreas } from '@/data/pain-areas';
-import { ALL_COMBOS } from '@/data/seo-combos';
+import { MetadataRoute } from 'next';
+import { sectors } from '@/data/sectors';
+import { articles } from '@/data/articles';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://productbuilder-1.vercel.app';
+const BASE = 'https://nexus-insight.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
-  // Static pages
-  const staticPages: MetadataRoute.Sitemap = [
-    { url: BASE_URL, lastModified: now, changeFrequency: 'weekly', priority: 1.0 },
-    { url: `${BASE_URL}/back-pain`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: BASE, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
+    { url: `${BASE}/sectors`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${BASE}/insights`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
+    { url: `${BASE}/calculator`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
   ];
 
-  // Exercise pages: /exercise/[slug]
-  const exercisePages: MetadataRoute.Sitemap = exercises.map((ex) => ({
-    url: `${BASE_URL}/exercise/${ex.slug}`,
-    lastModified: now,
-    changeFrequency: 'monthly',
+  const sectorRoutes: MetadataRoute.Sitemap = sectors.map(s => ({
+    url: `${BASE}/sectors/${s.id}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
     priority: 0.8,
   }));
 
-  // Pain area pages: /pain/[slug]
-  const painPages: MetadataRoute.Sitemap = painAreas.map((pain) => ({
-    url: `${BASE_URL}/pain/${pain.slug}`,
-    lastModified: now,
-    changeFrequency: 'monthly',
-    priority: 0.75,
-  }));
-
-  const stretchPages: MetadataRoute.Sitemap = ALL_COMBOS.map((combo) => ({
-    url: `${BASE_URL}/stretch/${combo.slug}`,
-    lastModified: now,
+  const articleRoutes: MetadataRoute.Sitemap = articles.map(a => ({
+    url: `${BASE}/insights/${a.slug}`,
+    lastModified: new Date(a.date),
     changeFrequency: 'monthly' as const,
-    priority: 0.7,
+    priority: 0.85,
   }));
 
-  return [...staticPages, ...exercisePages, ...painPages, ...stretchPages];
+  return [...staticRoutes, ...sectorRoutes, ...articleRoutes];
 }

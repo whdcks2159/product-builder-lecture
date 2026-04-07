@@ -1,96 +1,57 @@
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://stretch-guide.vercel.app';
-const SITE_NAME = 'DailyStretch';
+const BASE_URL = 'https://nexus-insight.vercel.app';
+const SITE_NAME = 'NexusInsight';
+const SITE_DESCRIPTION = '자산 토큰화(RWA), 양자 컴퓨팅, 우주 경제, BCI 등 미래 성장 섹터에 대한 전문가 인사이트 대시보드';
 
-export function buildMetadata({
+export function generateMetadata({
   title,
   description,
   path = '',
-  keywords = [],
+  image,
 }: {
   title: string;
-  description: string;
+  description?: string;
   path?: string;
-  keywords?: string[];
+  image?: string;
 }): Metadata {
-  const url = `${SITE_URL}${path}`;
+  const fullTitle = `${title} | ${SITE_NAME}`;
+  const desc = description || SITE_DESCRIPTION;
+  const url = `${BASE_URL}${path}`;
+  const ogImage = image || `${BASE_URL}/mainImage.png`;
 
   return {
-    title: `${title} | ${SITE_NAME}`,
-    description,
-    keywords: ['스트레칭', '운동 전 스트레칭', '운동 후 스트레칭', ...keywords],
-    alternates: { canonical: url },
+    title: fullTitle,
+    description: desc,
     openGraph: {
-      title: `${title} | ${SITE_NAME}`,
-      description,
+      title: fullTitle,
+      description: desc,
       url,
       siteName: SITE_NAME,
-      locale: 'ko_KR',
+      images: [{ url: ogImage, width: 1200, height: 630 }],
       type: 'website',
+      locale: 'ko_KR',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | ${SITE_NAME}`,
-      description,
+      title: fullTitle,
+      description: desc,
+      images: [ogImage],
     },
+    alternates: { canonical: url },
+    robots: { index: true, follow: true },
   };
 }
 
-/** JSON-LD: HowTo for a single stretch */
-export function buildHowToJsonLd(stretch: {
-  name: string;
-  description: string;
-  steps: string[];
-  holdTime: string;
-}) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: stretch.name,
-    description: stretch.description,
-    step: stretch.steps.map((text, i) => ({
-      '@type': 'HowToStep',
-      position: i + 1,
-      text,
-    })),
-    totalTime: stretch.holdTime,
-  };
-}
-
-/** JSON-LD: WebSite for home page */
-export function buildWebSiteJsonLd() {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: SITE_NAME,
-    url: SITE_URL,
-    description: '운동 전후 스트레칭 정보 제공 사이트',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${SITE_URL}/search?q={search_term_string}`,
-      'query-input': 'required name=search_term_string',
-    },
-  };
-}
-
-/** JSON-LD: Article for category/pain pages */
-export function buildArticleJsonLd({
-  title,
-  description,
-  path,
-}: {
-  title: string;
-  description: string;
-  path: string;
-}) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: title,
-    description,
-    url: `${SITE_URL}${path}`,
-    author: { '@type': 'Organization', name: SITE_NAME },
-    publisher: { '@type': 'Organization', name: SITE_NAME },
-  };
-}
+export const defaultMetadata: Metadata = {
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  metadataBase: new URL(BASE_URL),
+  keywords: ['RWA', '자산토큰화', '양자컴퓨팅', '우주경제', 'BCI', '뇌컴퓨터인터페이스', '미래투자', 'DeFi', '블록체인'],
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+};

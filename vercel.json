@@ -1,3 +1,25 @@
 {
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "crons": [
+    {
+      "path": "/api/fetch-news",
+      "schedule": "0 23 * * *",
+      "comment": "KST 08:00 (UTC 23:00 전날) — 장 시작 전 NewsAPI + Gemini 수집"
+    },
+    {
+      "path": "/api/fetch-news",
+      "schedule": "0 7 * * *",
+      "comment": "KST 16:00 (UTC 07:00) — 장 마감 후 뉴스 갱신"
+    },
+    {
+      "path": "/api/cron/news",
+      "schedule": "0 23 * * *",
+      "comment": "KST 08:00 — RSS 피드 캐시 갱신"
+    },
+    {
+      "path": "/api/cron/news",
+      "schedule": "0 7 * * *",
+      "comment": "KST 16:00 — RSS 피드 캐시 갱신"
+    }
+  ]
 }

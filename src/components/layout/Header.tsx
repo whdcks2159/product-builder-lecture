@@ -1,206 +1,27 @@
 'use client';
-
-import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { exercises } from '@/data/exercises';
-import { useAuth } from '@/contexts/AuthContext';
+import { Activity } from 'lucide-react';
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [query, setQuery] = useState('');
-  const router = useRouter();
-  const drawerRef = useRef<HTMLDivElement>(null);
-  const { user, profile, logout } = useAuth();
-
-  // Close drawer on outside click
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (drawerRef.current && !drawerRef.current.contains(e.target as Node)) {
-        setMenuOpen(false);
-      }
-    }
-    if (menuOpen) document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, [menuOpen]);
-
-  function handleSearch(e: React.FormEvent) {
-    e.preventDefault();
-    if (query.trim().length >= 2) {
-      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
-      setMenuOpen(false);
-    }
-  }
-
   return (
-    <>
-      <header className="sticky top-0 z-50 bg-gray-900 border-b border-white/5 h-14 flex items-center">
-        <div className="w-full max-w-5xl mx-auto px-4 flex items-center gap-3">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0 mr-2">
-            <span className="text-base font-semibold text-gray-200 whitespace-nowrap">
-              Daily<strong className="text-green-400 font-bold">Stretch</strong>
-            </span>
-          </Link>
-
-          {/* Desktop Search */}
-          <form onSubmit={handleSearch} className="hidden sm:flex flex-1 max-w-sm relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none">🔍</span>
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="운동 또는 근육 이름으로 검색..."
-              className="w-full bg-white/10 text-gray-100 placeholder-white/40 border border-white/15 rounded-full py-2 pl-9 pr-4 text-sm outline-none focus:border-green-400/50 focus:bg-white/15"
-            />
-          </form>
-
-          {/* Desktop Nav */}
-          <nav className="hidden sm:flex items-center gap-1 ml-auto">
-            {user ? (
-              <>
-                <Link href="/profile" className="px-3 py-1.5 text-sm text-green-400 hover:text-green-300 hover:bg-white/8 rounded-lg transition">
-                  @{profile?.nickname ?? user.displayName ?? '프로필'}
-                </Link>
-                <button onClick={() => logout().then(() => router.push('/'))} className="px-3 py-1.5 text-sm text-gray-400 hover:text-white hover:bg-white/8 rounded-lg transition">
-                  로그아웃
-                </button>
-              </>
-            ) : (
-              <Link href="/auth/login" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-                로그인
-              </Link>
-            )}
-            <Link href="/" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              홈
-            </Link>
-            <Link href="/routine" className="px-3 py-1.5 text-sm text-green-400 hover:text-green-300 hover:bg-white/8 rounded-lg transition font-semibold">
-              루틴
-            </Link>
-            <Link href="/#exercises" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              운동별
-            </Link>
-            <Link href="/#pain" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              통증별
-            </Link>
-            <Link href="/challenge" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              챌린지
-            </Link>
-            <Link href="/meetups" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              운동 모임
-            </Link>
-            <Link href="/community" className="px-3 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-white/8 rounded-lg transition">
-              커뮤니티
-            </Link>
-          </nav>
-
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setMenuOpen(true)}
-            className="sm:hidden ml-auto text-gray-300 text-2xl p-1"
-            aria-label="메뉴 열기"
-          >
-            ☰
-          </button>
-        </div>
-      </header>
-
-      {/* Mobile Drawer */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-50 flex">
-          <div
-            ref={drawerRef}
-            className="w-72 max-w-[85vw] bg-gray-900 h-full flex flex-col shadow-2xl animate-slide-up"
-            style={{ animation: 'slideInLeft 0.25s ease' }}
-          >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/8">
-              <span className="text-white font-bold">메뉴</span>
-              <button onClick={() => setMenuOpen(false)} className="text-gray-400 text-xl p-1">✕</button>
-            </div>
-
-            {/* Mobile Search */}
-            <form onSubmit={handleSearch} className="px-4 py-3 border-b border-white/8">
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none">🔍</span>
-                <input
-                  type="search"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="스트레칭 검색..."
-                  className="w-full bg-white/10 text-gray-100 placeholder-white/40 border border-white/15 rounded-full py-2 pl-9 pr-4 text-sm outline-none"
-                />
-              </div>
-            </form>
-
-            <nav className="flex-1 overflow-y-auto py-2">
-              <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
-                🏠 <span>홈</span>
-              </Link>
-              <Link href="/routine" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-green-400 hover:bg-white/5 hover:text-green-300 transition font-semibold">
-                ✨ <span>루틴 생성기</span>
-              </Link>
-              <Link href="/#exercises" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
-                🏋️ <span>운동별 스트레칭</span>
-              </Link>
-              <Link href="/#pain" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
-                💊 <span>통증별 스트레칭</span>
-              </Link>
-              <Link href="/back-pain" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
-                🦴 <span>허리 디스크 예방</span>
-              </Link>
-              <Link href="/meetups" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
-                🤝 <span>운동 모임</span>
-              </Link>
-              <Link href="/challenge" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
-                🏆 <span>스트레칭 챌린지</span>
-              </Link>
-              <Link href="/my-favorites" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
-                ❤️ <span>내 즐겨찾기</span>
-              </Link>
-              <Link href="/community" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
-                💬 <span>커뮤니티</span>
-              </Link>
-              {user ? (
-                <>
-                  <Link href="/profile" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-green-400 hover:bg-white/5 hover:text-green-300 transition">
-                    👤 <span>@{profile?.nickname ?? user.displayName ?? '프로필'}</span>
-                  </Link>
-                  <button onClick={() => { logout(); router.push('/'); setMenuOpen(false); }} className="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-white/5 hover:text-white transition w-full text-left">
-                    🚪 <span>로그아웃</span>
-                  </button>
-                </>
-              ) : (
-                <Link href="/auth/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition">
-                  🔑 <span>로그인</span>
-                </Link>
-              )}
-
-              <div className="px-4 pt-4 pb-2">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">운동 카테고리</p>
-              </div>
-              {exercises.map((ex) => (
-                <Link
-                  key={ex.id}
-                  href={`/exercise/${ex.slug}`}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:bg-white/5 hover:text-white transition text-sm"
-                >
-                  <span>{ex.icon}</span>
-                  <span>{ex.name}</span>
-                </Link>
-              ))}
-            </nav>
+    <header className="sticky top-0 z-40 border-b" style={{ background: 'rgba(7,13,26,0.85)', backdropFilter: 'blur(12px)', borderColor: 'var(--border)' }}>
+      <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)' }}>
+            <Activity size={14} className="text-white" />
           </div>
-          <div className="flex-1 bg-black/50" onClick={() => setMenuOpen(false)} />
-        </div>
-      )}
+          <span className="font-bold text-sm tracking-tight" style={{ color: 'var(--text-primary)' }}>
+            Nexus<span className="gradient-text-blue">Insight</span>
+          </span>
+        </Link>
 
-      <style jsx global>{`
-        @keyframes slideInLeft {
-          from { transform: translateX(-100%); opacity: 0; }
-          to   { transform: translateX(0); opacity: 1; }
-        }
-      `}</style>
-    </>
+        <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 px-2 py-1 rounded-full text-xs" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 pulse-dot" />
+            <span style={{ color: 'var(--text-secondary)' }}>Live</span>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }
