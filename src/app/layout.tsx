@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     title: 'NexusInsight',
   },
   formatDetection: { telephone: false },
+  verification: {
+    // Google Search Console 인증 코드 — GSC에서 발급받은 코드로 교체하세요
+    google: 'REPLACE_WITH_GSC_VERIFICATION_CODE',
+  },
   other: {
     'mobile-web-app-capable': 'yes',
   },
